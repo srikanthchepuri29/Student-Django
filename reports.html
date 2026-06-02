@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Reports & Analytics - Student Management Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="student.css">
+    <style>
+        .progress-bar-container {
+            width: 100%;
+            background: rgba(100, 116, 139, 0.1);
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.8s ease;
+        }
+    </style>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>ADMIN PORTAL</h2>
+        </div>
+
+        <ul class="menu">
+            <li>
+                <a href="index.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="student.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    Students
+                </a>
+            </li>
+            <li>
+                <a href="courses.html">
+                    <i class="fa-solid fa-book"></i>
+                    Courses
+                </a>
+            </li>
+            <li>
+                <a href="teachers.html">
+                    <i class="fa-solid fa-users"></i>
+                    Teachers
+                </a>
+            </li>
+            <li>
+                <a href="schedule.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Schedule
+                </a>
+            </li>
+            <li class="active">
+                <a href="reports.html">
+                    <i class="fa-solid fa-square-poll-vertical"></i>
+                    Reports
+                </a>
+            </li>
+            <li>
+                <a href="settings.html">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+            </li>
+            <div class="S">
+                <a href="login.html">
+                    Login
+                </a>
+                <a href="logout.html">
+                    Logout
+                </a>
+            </div>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- Topbar -->
+        <div class="topbar">
+            <div>
+                <h2>Academic Reports & Analytics</h2>
+            </div>
+            <div class="admin">
+                <img src="srikanth.png" alt="profile pic">
+                <span>Admin</span>
+            </div>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="cards">
+            <div class="card">
+                <div>
+                    <h2>96.2%</h2>
+                    <p>Passing Ratio</p>
+                </div>
+                <i class="fa-solid fa-award"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h2>4.8 / 5</h2>
+                    <p>Student Satisfaction</p>
+                </div>
+                <i class="fa-solid fa-star"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h2>94.5%</h2>
+                    <p>Avg Attendance</p>
+                </div>
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+        </div>
+
+        <!-- Progress List Section -->
+        <div class="student-form" style="margin-bottom: 30px;">
+            <h2>Course Enrollment Analytics</h2>
+            <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 15px;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600;">
+                        <span>Python Full Stack</span>
+                        <span>42 Students enrolled</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 85%; background: var(--primary-color);"></div>
+                    </div>
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600;">
+                        <span>Java Development</span>
+                        <span>28 Students enrolled</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 60%; background: var(--primary-color); opacity: 0.85;"></div>
+                    </div>
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600;">
+                        <span>React JS</span>
+                        <span>19 Students enrolled</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: 45%; background: var(--primary-color); opacity: 0.7;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Apply Global Theme preferences
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const savedColor = localStorage.getItem('accentColor') || '#3b82f6';
+            const savedHover = localStorage.getItem('accentHover') || '#2563eb';
+
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.documentElement.style.setProperty('--sidebar-border', savedColor);
+            document.documentElement.style.setProperty('--sidebar-active-bg', savedColor);
+            document.documentElement.style.setProperty('--primary-color', savedColor);
+            document.documentElement.style.setProperty('--primary-hover', savedHover);
+
+            // Sync Admin Display Profile
+            const adminName = localStorage.getItem('adminName') || 'Admin';
+            const adminAvatar = localStorage.getItem('adminAvatar') || 'srikanth.png';
+            
+            const nameEl = document.querySelector('.admin span');
+            const avatarEl = document.querySelector('.admin img');
+            if (nameEl) nameEl.textContent = adminName;
+            if (avatarEl) avatarEl.src = adminAvatar;
+        });
+    </script>
+</body>
+
+</html>

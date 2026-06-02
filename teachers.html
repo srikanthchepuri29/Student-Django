@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teachers Directory - Student Management Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="teachers.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>ADMIN PORTAL</h2>
+        </div>
+
+        <ul class="menu">
+            <li>
+                <a href="index.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="student.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    Students
+                </a>
+            </li>
+            <li>
+                <a href="courses.html">
+                    <i class="fa-solid fa-book"></i>
+                    Courses
+                </a>
+            </li>
+            <li class="active">
+                <a href="teachers.html">
+                    <i class="fa-solid fa-users"></i>
+                    Teachers
+                </a>
+            </li>
+            <li>
+                <a href="schedule.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Schedule
+                </a>
+            </li>
+            <li>
+                <a href="reports.html">
+                    <i class="fa-solid fa-square-poll-vertical"></i>
+                    Reports
+                </a>
+            </li>
+            <li>
+                <a href="settings.html">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+            </li>
+            <div class="S">
+                <a href="login.html">
+                    Login 
+                </a>
+                <a href="logout.html">
+                    Logout
+                </a> 
+            </div>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search teacher">
+                <button>Search</button>
+            </div>
+            <div class="admin">
+                <img src="srikanth.png" alt="profile pic">
+                <span>Admin</span>
+            </div>
+        </div>
+
+        <!-- Teacher Cards -->
+        <div class="cards">
+            <div class="card">
+                <div>
+                    <h2 id="totalTeachers">5</h2>
+                    <p>Total Staff</p>
+                </div>
+                <i class="fa-solid fa-users"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h2 id="activeTeachers">5</h2>
+                    <p>Active Staff</p>
+                </div>
+                <i class="fa-solid fa-user-check"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h2 id="onLeaveTeachers">0</h2>
+                    <p>On Leave</p>
+                </div>
+                <i class="fa-solid fa-user-slash"></i>
+            </div>
+        </div>
+
+        <!-- Teacher Form -->
+        <div class="student-form">
+            <h2>Add / Edit Teacher</h2>
+            <div class="form-grid">
+                <input type="hidden" id="editIndex">
+                <input type="text" id="teacherName" placeholder="Teacher Name">
+                <input type="email" id="teacherEmail" placeholder="Email Address">
+                <input type="text" id="teacherSpec" placeholder="Specialization (e.g. Java)">
+                <input type="text" id="teacherExp" placeholder="Experience (e.g. 5 Years)">
+                <select id="teacherStatus">
+                    <option value="Active">Active</option>
+                    <option value="On Leave">On Leave</option>
+                </select>
+            </div>
+            <button id="addBtn" onclick="addTeacher()">Add Teacher</button>
+        </div>
+
+        <!-- Teachers Table -->
+        <div class="table-section">
+            <div class="table-header">
+                <h2>Teacher Details</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Specialization</th>
+                            <th>Experience</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teacherTable">
+                        <!-- Rendered by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="teachers.js"></script>
+</body>
+
+</html>

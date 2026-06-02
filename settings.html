@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Settings - Student Management Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="settings.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>ADMIN PORTAL</h2>
+        </div>
+
+        <ul class="menu">
+            <li>
+                <a href="index.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="student.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    Students
+                </a>
+            </li>
+            <li>
+                <a href="courses.html">
+                    <i class="fa-solid fa-book"></i>
+                    Courses
+                </a>
+            </li>
+            <li>
+                <a href="teachers.html">
+                    <i class="fa-solid fa-users"></i>
+                    Teachers
+                </a>
+            </li>
+            <li>
+                <a href="schedule.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Schedule
+                </a>
+            </li>
+            <li>
+                <a href="reports.html">
+                    <i class="fa-solid fa-square-poll-vertical"></i>
+                    Reports
+                </a>
+            </li>
+            <li class="active">
+                <a href="settings.html">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+            </li>
+            <div class="S">
+                <a href="login.html">
+                    Login
+                </a>
+                <a href="logout.html">
+                    Logout
+                </a>
+            </div>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Topbar -->
+        <div class="topbar">
+            <div>
+                <h2>Settings</h2>
+            </div>
+            <div class="admin">
+                <img src="srikanth.png" alt="profile pic" id="topbarAvatar">
+                <span id="topbarAdminName">Admin</span>
+            </div>
+        </div>
+
+        <div class="settings-grid">
+
+            <!-- Admin Profile Customization -->
+            <div class="settings-card">
+                <div class="settings-header">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <h3>Admin Profile</h3>
+                </div>
+                <div class="profile-preview-section">
+                    <div class="avatar-wrapper">
+                        <img src="srikanth.png" id="profileAvatar" alt="Admin Avatar">
+                        <label for="avatarUpload" class="avatar-upload-btn">
+                            <i class="fa-solid fa-camera"></i>
+                        </label>
+                        <input type="file" id="avatarUpload" accept="image/*" style="display:none;">
+                    </div>
+                    <div class="profile-details-inputs">
+                        <div class="setting-input-group">
+                            <label>Admin Display Name</label>
+                            <input type="text" id="adminName" placeholder="Admin Name" value="Admin">
+                        </div>
+                        <div class="setting-input-group">
+                            <label>Admin Email Address</label>
+                            <input type="email" id="adminEmail" placeholder="admin@gmail.com" value="admin@gmail.com">
+                        </div>
+                        <button class="settings-btn primary-btn" onclick="saveProfileSettings()">Save Profile
+                            Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appearance & Custom Themes -->
+            <div class="settings-card">
+                <div class="settings-header">
+                    <i class="fa-solid fa-palette"></i>
+                    <h3>Theme & Appearance</h3>
+                </div>
+
+                <!-- Dark Mode Toggle Switch -->
+                <div class="setting-row">
+                    <div>
+                        <h4>Dark Mode Theme</h4>
+                        <p>Toggle high-contrast dark palette styling</p>
+                    </div>
+                    <label class="switch-toggle">
+                        <input type="checkbox" id="darkModeToggle" onchange="selectDarkTheme(this.checked)">
+                        <span class="slider-round"></span>
+                    </label>
+                </div>
+
+                <!-- Primary Color Accent Switcher -->
+                <div class="accent-selector-section">
+                    <h4>Primary Theme Accent Color</h4>
+                    <p>Select custom branding colors across buttons, icons, borders, and menus</p>
+                    <div class="color-options-grid">
+                        <div class="color-dot active" style="background:#2563eb;" data-color="#2563eb"
+                            data-hover="#1d4ed8" onclick="selectAccentColor(this)"></div>
+                        <div class="color-dot" style="background:#10b981;" data-color="#10b981" data-hover="#059669"
+                            onclick="selectAccentColor(this)"></div>
+                        <div class="color-dot" style="background:#f59e0b;" data-color="#f59e0b" data-hover="#d97706"
+                            onclick="selectAccentColor(this)"></div>
+                        <div class="color-dot" style="background:#8b5cf6;" data-color="#8b5cf6" data-hover="#7c3aed"
+                            onclick="selectAccentColor(this)"></div>
+                        <div class="color-dot" style="background:#ef4444;" data-color="#ef4444" data-hover="#dc2626"
+                            onclick="selectAccentColor(this)"></div>
+                        <!-- Extra Premium Accent Colors -->
+                        <div class="color-dot" style="background:#14b8a6;" data-color="#14b8a6" data-hover="#0d9488"
+                            onclick="selectAccentColor(this)"></div>
+                        <div class="color-dot" style="background:#06b6d4;" data-color="#06b6d4" data-hover="#0891b2"
+                            onclick="selectAccentColor(this)"></div>
+                        <div class="color-dot" style="background:#eab308;" data-color="#eab308" data-hover="#ca8a04"
+                            onclick="selectAccentColor(this)"></div>
+                        <div class="color-dot" style="background:#ec4899;" data-color="#ec4899" data-hover="#db2777"
+                            onclick="selectAccentColor(this)"></div>
+                        <div class="color-dot" style="background:#475569;" data-color="#475569" data-hover="#334155"
+                            onclick="selectAccentColor(this)"></div>
+                        <div class="color-dot" style="background:#84cc16;" data-color="#84cc16" data-hover="#65a30d"
+                            onclick="selectAccentColor(this)"></div>
+                        <div class="color-dot" style="background:#6366f1;" data-color="#6366f1" data-hover="#4f46e5"
+                            onclick="selectAccentColor(this)"></div>
+                        <div class="color-dot" style="background:#f97316;" data-color="#f97316" data-hover="#ea580c"
+                            onclick="selectAccentColor(this)"></div>
+                        <div class="color-dot" style="background:#d946ef;" data-color="#d946ef" data-hover="#c026d3"
+                            onclick="selectAccentColor(this)"></div>
+                        <div class="color-dot" style="background:#be123c;" data-color="#be123c" data-hover="#9f1239"
+                            onclick="selectAccentColor(this)"></div>
+                    </div>
+                </div>
+                <button class="settings-btn primary-btn " style="margin-top: 65px;"
+                    onclick="applyAppearanceSettings()">Apply Theme</button>
+            </div>
+
+            <!-- System Alerts & Notifications -->
+            <div class="settings-card">
+                <div class="settings-header">
+                    <i class="fa-solid fa-bell"></i>
+                    <h3>Notification Preferences</h3>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <h4>Email Notifications</h4>
+                        <p>Receive summaries, notifications and announcements via email</p>
+                    </div>
+                    <label class="switch-toggle">
+                        <input type="checkbox" id="emailNotif" checked>
+                        <span class="slider-round"></span>
+                    </label>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <h4>New Student Registrations</h4>
+                        <p>Receive alert notifications when new students enroll</p>
+                    </div>
+                    <label class="switch-toggle">
+                        <input type="checkbox" id="studentNotif" checked>
+                        <span class="slider-round"></span>
+                    </label>
+                </div>
+
+                <div class="setting-row">
+                    <div>
+                        <h4>Weekly System Digests</h4>
+                        <p>Send a automated digest report every Monday morning</p>
+                    </div>
+                    <label class="switch-toggle">
+                        <input type="checkbox" id="digestNotif">
+                        <span class="slider-round"></span>
+                    </label>
+                </div>
+                <button class="settings-btn primary-btn" onclick="saveNotificationSettings()">Save Preferences</button>
+            </div>
+
+            <!-- Security Credentials -->
+            <div class="settings-card">
+                <div class="settings-header">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <h3>Security & Passwords</h3>
+                </div>
+                <div class="profile-details-inputs">
+                    <div class="setting-input-group">
+                        <label>Current Administrator Password</label>
+                        <input type="password" id="currentPass" placeholder="••••••••">
+                    </div>
+                    <div class="setting-input-group">
+                        <label>New Secured Password</label>
+                        <input type="password" id="newPass" placeholder="••••••••">
+                    </div>
+                    <div class="setting-input-group">
+                        <label>Verify Password Confirmation</label>
+                        <input type="password" id="confirmPass" placeholder="••••••••">
+                    </div>
+                    <button class="settings-btn primary-btn" style="margin-top: 8px;"
+                        onclick="changeAdminPassword()">Update Security
+                        Key</button>
+                </div>
+            </div>
+
+            <!-- System Data & Backup (Extra Feature) -->
+            <div class="settings-card">
+                <div class="settings-header">
+                    <i class="fa-solid fa-database"></i>
+                    <h3>System Data & Backup</h3>
+                </div>
+                <div class="profile-details-inputs">
+                    <p style="font-size: 13px; color: var(--card-text-secondary); line-height: 1.6;">
+                        Manage your student dashboard database records. You can backup your current data, upload a saved
+                        state, or completely restore the platform to its factory settings.
+                    </p>
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                        <button class="settings-btn primary-btn s" style="margin-top: 0;" onclick="exportSystemData()">
+                            <i class="fa-solid fa-file-export" style="margin-right: 8px;"></i>Export System Backup
+                        </button>
+
+                        <label class="settings-btn primary-btn s"
+                            style="margin-top: 0; text-align: center; display: inline-block; cursor: pointer; background: var(--card-text-secondary);">
+                            <i class="fa-solid fa-file-import" style="margin-right: 8px;"></i>Import System Backup
+                            <input type="file" id="importDataFile" accept=".json" style="display:none;"
+                                onchange="importSystemData(this)">
+                        </label>
+
+                        <button class="settings-btn s" style="margin-top: 0; background: #ef4444; color: #fff;"
+                            onclick="resetSystemData()">
+                            <i class="fa-solid fa-trash-can" style="margin-right: 8px;"></i>Reset Database States
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live System Activity Tracker (Extra Feature) -->
+            <div class="settings-card">
+                <div class="settings-header">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <h3>Live System Activity Log</h3>
+                </div>
+                <div class="profile-details-inputs">
+                    <p style="font-size: 13px; color: var(--card-text-secondary); line-height: 1.6;">
+                        Real-time audit log of actions performed on this administrator panel. Logs are generated
+                        dynamically upon editing records or saving preferences.
+                    </p>
+                    <div id="activityLogList"
+                        style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-top: 10px; padding-right: 5px;">
+                        <!-- Rendered by JS -->
+                    </div>
+                    <button class="settings-btn"
+                        style="margin-top: 10px; background: rgba(0,0,0,0.05); color: var(--card-text-primary);"
+                        onclick="clearActivityLogs()">
+                        <i class="fa-solid fa-eraser" style="margin-right: 8px;"></i>Clear Activity Logs
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="settings.js"></script>
+</body>
+
+</html>

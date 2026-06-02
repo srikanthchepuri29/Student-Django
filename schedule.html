@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Schedule - Student Management Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="student.css">
+    <style>
+        .timetable-cell {
+            padding: 12px;
+            font-size: 13px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .class-python { background: #3b82f6; }
+        .class-java { background: #10b981; }
+        .class-react { background: #8b5cf6; }
+        .class-web { background: #f59e0b; }
+        .class-flutter { background: #ec4899; }
+    </style>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>ADMIN PORTAL</h2>
+        </div>
+
+        <ul class="menu">
+            <li>
+                <a href="index.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="student.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    Students
+                </a>
+            </li>
+            <li>
+                <a href="courses.html">
+                    <i class="fa-solid fa-book"></i>
+                    Courses
+                </a>
+            </li>
+            <li>
+                <a href="teachers.html">
+                    <i class="fa-solid fa-users"></i>
+                    Teachers
+                </a>
+            </li>
+            <li class="active">
+                <a href="schedule.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Schedule
+                </a>
+            </li>
+            <li>
+                <a href="reports.html">
+                    <i class="fa-solid fa-square-poll-vertical"></i>
+                    Reports
+                </a>
+            </li>
+            <li>
+                <a href="settings.html">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+            </li>
+            <div class="S">
+                <a href="login.html">
+                    Login
+                </a>
+                <a href="logout.html">
+                    Logout
+                </a>
+            </div>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- Topbar -->
+        <div class="topbar">
+            <div>
+                <h2>Academic Timetable</h2>
+            </div>
+            <div class="admin">
+                <img src="srikanth.png" alt="profile pic">
+                <span>Admin</span>
+            </div>
+        </div>
+
+        <!-- Timetable Section -->
+        <div class="table-section">
+            <div class="table-header">
+                <h2>Weekly Class Timetable</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time / Day</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>09:00 AM - 10:30 AM</strong></td>
+                            <td><div class="timetable-cell class-python">Python Full Stack<br><small>Vijay Kumar - Room 101</small></div></td>
+                            <td><div class="timetable-cell class-java">Java Development<br><small>Prasad Roy - Room 203</small></div></td>
+                            <td><div class="timetable-cell class-python">Python Full Stack<br><small>Vijay Kumar - Room 101</small></div></td>
+                            <td><div class="timetable-cell class-java">Java Development<br><small>Prasad Roy - Room 203</small></div></td>
+                            <td><div class="timetable-cell class-web">Web Development<br><small>Sneha Reddy - Lab A</small></div></td>
+                        </tr>
+                        <tr>
+                            <td><strong>11:00 AM - 12:30 PM</strong></td>
+                            <td><div class="timetable-cell class-react">React JS<br><small>Suresh Kumar - Room 105</small></div></td>
+                            <td><div class="timetable-cell class-flutter">Flutter Mobile App<br><small>Naveen Kumar - Room 302</small></div></td>
+                            <td><div class="timetable-cell class-react">React JS<br><small>Suresh Kumar - Room 105</small></div></td>
+                            <td><div class="timetable-cell class-flutter">Flutter Mobile App<br><small>Naveen Kumar - Room 302</small></div></td>
+                            <td><div class="timetable-cell class-python">Python Full Stack<br><small>Vijay Kumar - Room 101</small></div></td>
+                        </tr>
+                        <tr>
+                            <td><strong>02:00 PM - 03:30 PM</strong></td>
+                            <td><div class="timetable-cell class-web">Web Development<br><small>Sneha Reddy - Lab A</small></div></td>
+                            <td><div class="timetable-cell class-python">Python Full Stack<br><small>Vijay Kumar - Room 101</small></div></td>
+                            <td><div class="timetable-cell class-web">Web Development<br><small>Sneha Reddy - Lab A</small></div></td>
+                            <td><div class="timetable-cell class-react">React JS<br><small>Suresh Kumar - Room 105</small></div></td>
+                            <td><div class="timetable-cell class-flutter">Flutter Mobile App<br><small>Naveen Kumar - Room 302</small></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Apply Global Theme preferences
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const savedColor = localStorage.getItem('accentColor') || '#3b82f6';
+            const savedHover = localStorage.getItem('accentHover') || '#2563eb';
+
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.documentElement.style.setProperty('--sidebar-border', savedColor);
+            document.documentElement.style.setProperty('--sidebar-active-bg', savedColor);
+            document.documentElement.style.setProperty('--primary-color', savedColor);
+            document.documentElement.style.setProperty('--primary-hover', savedHover);
+
+            // Sync Admin Display Profile
+            const adminName = localStorage.getItem('adminName') || 'Admin';
+            const adminAvatar = localStorage.getItem('adminAvatar') || 'srikanth.png';
+            
+            const nameEl = document.querySelector('.admin span');
+            const avatarEl = document.querySelector('.admin img');
+            if (nameEl) nameEl.textContent = adminName;
+            if (avatarEl) avatarEl.src = adminAvatar;
+        });
+    </script>
+</body>
+
+</html>

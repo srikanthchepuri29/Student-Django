@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Directory - Student Management Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="student.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>ADMIN PORTAL</h2>
+        </div>
+
+        <ul class="menu">
+            <li>
+                <a href="index.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="active">
+                <a href="student.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    Students
+                </a>
+            </li>
+            <li>
+                <a href="courses.html">
+                    <i class="fa-solid fa-book"></i>
+                    Courses
+                </a>
+            </li>
+            <li>
+                <a href="teachers.html">
+                    <i class="fa-solid fa-users"></i>
+                    Teachers
+                </a>
+            </li>
+            <li>
+                <a href="schedule.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Schedule
+                </a>
+            </li>
+            <li>
+                <a href="reports.html">
+                    <i class="fa-solid fa-square-poll-vertical"></i>
+                    Reports
+                </a>
+            </li>
+            <li>
+                <a href="settings.html">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+            </li>
+            <div class="S">
+                <a href="login.html">
+                    Login 
+                </a>
+                <a href="logout.html">
+                    Logout
+                </a> 
+            </div>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search student">
+                <button>Search</button>
+            </div>
+            <div class="admin">
+                <img src="srikanth.png" alt="profile pic">
+                <span>Admin</span>
+            </div>
+        </div>
+
+        <!-- Student Form -->
+        <div class="student-form">
+            <h2>Add / Edit Student</h2>
+            <div class="form-grid">
+                <input type="hidden" id="editIndex">
+                <input type="text" id="name" placeholder="Student Name">
+                <input type="email" id="email" placeholder="Email Address">
+                <input type="text" id="course" placeholder="Course">
+                <select id="status">
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+            <button id="addBtn" onclick="addStudent()">Add Student</button>
+        </div>
+
+        <!-- Student Table -->
+        <div class="table-section">
+            <div class="table-header">
+                <h2>Student Details</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Course</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTable">
+                        <tr>
+                            <td>101</td>
+                            <td>Srikanth</td>
+                            <td>srikanth@gmail.com</td>
+                            <td>Python Full Stack</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <button class="edit-btn" onclick="editStudent(this)">Edit</button>
+                                <button class="delete-btn" onclick="deleteStudent(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>102</td>
+                            <td>Rahul</td>
+                            <td>rahul@gmail.com</td>
+                            <td>Java</td>
+                            <td><span class="status inactive">Inactive</span></td>
+                            <td>
+                                <button class="edit-btn" onclick="editStudent(this)">Edit</button>
+                                <button class="delete-btn" onclick="deleteStudent(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>103</td>
+                            <td>Anjali</td>
+                            <td>anjali@gmail.com</td>
+                            <td>Web Development</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <button class="edit-btn" onclick="editStudent(this)">Edit</button>
+                                <button class="delete-btn" onclick="deleteStudent(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>104</td>
+                            <td>praveen</td>
+                            <td>srikanth@gmail.com</td>
+                            <td>Python Full Stack</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <button class="edit-btn" onclick="editStudent(this)">Edit</button>
+                                <button class="delete-btn" onclick="deleteStudent(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>105</td>
+                            <td>Sravani</td>
+                            <td>sravani@gmail.com</td>
+                            <td>Python Full Stack</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <button class="edit-btn" onclick="editStudent(this)">Edit</button>
+                                <button class="delete-btn" onclick="deleteStudent(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>106</td>
+                            <td>premm</td>
+                            <td>prem@gmail.com</td>
+                            <td>React</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <button class="edit-btn" onclick="editStudent(this)">Edit</button>
+                                <button class="delete-btn" onclick="deleteStudent(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>107</td>
+                            <td>sai</td>
+                            <td>sai@gmail.com</td>
+                            <td>Python Full Stack</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <button class="edit-btn" onclick="editStudent(this)">Edit</button>
+                                <button class="delete-btn" onclick="deleteStudent(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>108</td>
+                            <td>ganesh</td>
+                            <td>ganesh@gmail.com</td>
+                            <td>flutter</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <button class="edit-btn" onclick="editStudent(this)">Edit</button>
+                                <button class="delete-btn" onclick="deleteStudent(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>109</td>
+                            <td>mahesh</td>
+                            <td>mahesh@gmail.com</td>
+                            <td>Java</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <button class="edit-btn" onclick="editStudent(this)">Edit</button>
+                                <button class="delete-btn" onclick="deleteStudent(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>110</td>
+                            <td>vinay</td>
+                            <td>vinay@gmail.com</td>
+                            <td>Java</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <button class="edit-btn" onclick="editStudent(this)">Edit</button>
+                                <button class="delete-btn" onclick="deleteStudent(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>111</td>
+                            <td>soumya</td>
+                            <td>soumya@gmail.com</td>
+                            <td>flutter</td>
+                            <td><span class="status active">Active</span></td>
+                            <td>
+                                <button class="edit-btn" onclick="editStudent(this)">Edit</button>
+                                <button class="delete-btn" onclick="deleteStudent(this)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses Directory - Student Management Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="courses.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>ADMIN PORTAL</h2>
+        </div>
+
+        <ul class="menu">
+            <li>
+                <a href="index.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="student.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    Students
+                </a>
+            </li>
+            <li class="active">
+                <a href="courses.html">
+                    <i class="fa-solid fa-book"></i>
+                    Courses
+                </a>
+            </li>
+            <li>
+                <a href="teachers.html">
+                    <i class="fa-solid fa-users"></i>
+                    Teachers
+                </a>
+            </li>
+            <li>
+                <a href="schedule.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Schedule
+                </a>
+            </li>
+            <li>
+                <a href="reports.html">
+                    <i class="fa-solid fa-square-poll-vertical"></i>
+                    Reports
+                </a>
+            </li>
+            <li>
+                <a href="settings.html">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+            </li>
+            <div class="S">
+                <a href="login.html">
+                    Login 
+                </a>
+                <a href="logout.html">
+                    Logout
+                </a> 
+            </div>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search course">
+                <button>Search</button>
+            </div>
+            <div class="admin">
+                <img src="srikanth.png" alt="profile pic">
+                <span>Admin</span>
+            </div>
+        </div>
+
+        <!-- Course Cards -->
+        <div class="cards">
+            <div class="card">
+                <div>
+                    <h2 id="totalCourses">5</h2>
+                    <p>Total Courses</p>
+                </div>
+                <i class="fa-solid fa-book"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h2 id="activeCourses">5</h2>
+                    <p>Active Courses</p>
+                </div>
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h2 id="totalCategories">3</h2>
+                    <p>Categories</p>
+                </div>
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+        </div>
+
+        <!-- Course Form -->
+        <div class="student-form">
+            <h2>Add / Edit Course</h2>
+            <div class="form-grid">
+                <input type="hidden" id="editIndex">
+                <input type="text" id="courseTitle" placeholder="Course Title">
+                <input type="text" id="courseTeacher" placeholder="Instructor Name">
+                <input type="text" id="courseCategory" placeholder="Category (e.g. Development)">
+                <input type="text" id="courseDuration" placeholder="Duration (e.g. 3 Months)">
+                <select id="courseStatus">
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+            <button id="addBtn" onclick="addCourse()">Add Course</button>
+        </div>
+
+        <!-- Courses Table -->
+        <div class="table-section">
+            <div class="table-header">
+                <h2>Course Details</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Instructor</th>
+                            <th>Category</th>
+                            <th>Duration</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseTable">
+                        <!-- Rendered by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="courses.js"></script>
+</body>
+
+</html>
