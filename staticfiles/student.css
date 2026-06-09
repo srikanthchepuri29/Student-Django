@@ -1,0 +1,162 @@
+/* Student Directory Specific Stylesheet - Fully Adaptive to style.css branding */
+
+.table-section {
+    background: var(--card-bg);
+    color: var(--card-text-primary);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    margin-bottom: 40px;
+    transition: all 0.3s ease;
+}
+
+.table-header {
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.table-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    border-left: 4px solid var(--primary-color);
+    padding-left: 12px;
+}
+
+.table-container {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    text-align: left;
+}
+
+table thead {
+    background: var(--table-header-bg);
+    color: var(--table-header-text);
+}
+
+table th {
+    padding: 14px 20px;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-color);
+}
+
+table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--card-text-primary);
+    font-weight: 500;
+}
+
+table tbody tr {
+    transition: all 0.2s ease;
+}
+
+table tbody tr:hover {
+    background: var(--table-tr-hover);
+}
+
+table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Flex Center alignment for the Action Buttons Column */
+table td:last-child {
+    white-space: nowrap;
+    display: flex;
+    gap: 8px;
+}
+
+/* Status Badge Styles */
+.status {
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid transparent;
+}
+
+.status::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status.active {
+    background: rgba(16, 185, 129, 0.08);
+    color: #10b981;
+    border-color: rgba(16, 185, 129, 0.15);
+}
+
+.status.active::before {
+    background: #10b981;
+}
+
+.status.inactive {
+    background: rgba(239, 68, 68, 0.08);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.15);
+}
+
+.status.inactive::before {
+    background: #ef4444;
+}
+
+/* Compact Premium Action Buttons */
+.edit-btn {
+    background: rgba(245, 158, 11, 0.08);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    padding: 7px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+    background: #f59e0b;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
+}
+
+.delete-btn {
+    background: rgba(239, 68, 68, 0.08);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    padding: 7px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+    background: #ef4444;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
+}
+
+/* Media Queries for responsive lists scaling */
+@media(max-width: 900px) {
+    .table-section {
+        padding: 20px;
+    }
+}
