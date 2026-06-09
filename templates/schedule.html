@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="{{ profile.theme }}">
 
 <head>
     <meta charset="UTF-8">
@@ -7,8 +7,8 @@
     <title>Academic Schedule - Student Management Dashboard</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="student.css">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/student.css">
     <style>
         .timetable-cell {
             padding: 12px;
@@ -26,8 +26,14 @@
         .class-flutter { background: #ec4899; }
     </style>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-border: {{ profile.accent_color }} !important;
+            --sidebar-active-bg: {{ profile.accent_color }}1a !important;
+            --primary-color: {{ profile.accent_color }} !important;
+            --primary-hover: {{ profile.accent_hover }} !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -101,8 +107,8 @@
                 <h2>Academic Timetable</h2>
             </div>
             <div class="admin">
-                <img src="srikanth.png" alt="profile pic">
-                <span>Admin</span>
+                <img src="{{ profile.admin_avatar }}" alt="profile pic" id="topbarAvatar">
+                <span>{{ profile.admin_name }}</span>
             </div>
         </div>
 

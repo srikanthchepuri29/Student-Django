@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="{{ profile.theme }}">
 
 <head>
     <meta charset="UTF-8">
@@ -7,11 +7,19 @@
     <title>System Settings - Student Management Dashboard</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="settings.css">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/settings.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-border: {{ profile.accent_color }} !important;
+            --sidebar-active-bg: {{ profile.accent_color }}1a !important;
+            --primary-color: {{ profile.accent_color }} !important;
+            --primary-hover: {{ profile.accent_hover }} !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -85,8 +93,8 @@
                 <h2>Settings</h2>
             </div>
             <div class="admin">
-                <img src="srikanth.png" alt="profile pic" id="topbarAvatar">
-                <span id="topbarAdminName">Admin</span>
+                <img src="{{ profile.admin_avatar }}" alt="profile pic" id="topbarAvatar">
+                <span id="topbarAdminName">{{ profile.admin_name }}</span>
             </div>
         </div>
 
@@ -100,7 +108,7 @@
                 </div>
                 <div class="profile-preview-section">
                     <div class="avatar-wrapper">
-                        <img src="srikanth.png" id="profileAvatar" alt="Admin Avatar">
+                        <img src="{{ profile.admin_avatar }}" id="profileAvatar" alt="Admin Avatar">
                         <label for="avatarUpload" class="avatar-upload-btn">
                             <i class="fa-solid fa-camera"></i>
                         </label>
@@ -307,7 +315,7 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="settings.js"></script>
+    <script src="../static/settings.js"></script>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="{{ profile.theme }}">
 
 <head>
     <meta charset="UTF-8">
@@ -7,12 +7,20 @@
     <title>Student Directory - Student Management Dashboard</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="student.css">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/student.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-border: {{ profile.accent_color }} !important;
+            --sidebar-active-bg: {{ profile.accent_color }}1a !important;
+            --primary-color: {{ profile.accent_color }} !important;
+            --primary-hover: {{ profile.accent_hover }} !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -87,8 +95,8 @@
                 <button>Search</button>
             </div>
             <div class="admin">
-                <img src="srikanth.png" alt="profile pic">
-                <span>Admin</span>
+                <img src="{{ profile.admin_avatar }}" alt="profile pic" id="topbarAvatar">
+                <span id="topbarAdminName">{{ profile.admin_name }}</span>
             </div>
         </div>
 
@@ -254,7 +262,7 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="script.js"></script>
+    <script src="../static/script.js"></script>
 </body>
 
 </html>

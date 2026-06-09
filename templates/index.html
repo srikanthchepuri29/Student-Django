@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="{{ profile.theme }}">
 
 <head>
     <meta charset="UTF-8">
@@ -7,11 +7,18 @@
     <title>Student Management Dashboard</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../static/style.css">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-border: {{ profile.accent_color }} !important;
+            --sidebar-active-bg: {{ profile.accent_color }}1a !important;
+            --primary-color: {{ profile.accent_color }} !important;
+            --primary-hover: {{ profile.accent_hover }} !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -21,7 +28,7 @@
     <div class="sidebar">
 
         <div class="logo">
-          
+
             <h2>ADMIN PORTAL</h2>
         </div>
 
@@ -77,13 +84,13 @@
             </li>
             <div class="S">
                 <a href="login.html">
-                    Login 
+                    Login
                 </a>
                 <a href="logout.html">
                     Logout
-                </a> 
+                </a>
             </div>
-         
+
 
         </ul>
 
@@ -97,24 +104,22 @@
 
         <div class="topbar">
 
-           <div class="search-box">
+            <div class="search-box">
 
-    <input type="text"
-        id="searchInput"
-        placeholder="Search student">
+                <input type="text" id="searchInput" placeholder="Search student">
 
-    <button>
-        Search
-    </button>
+                <button>
+                    Search
+                </button>
 
-    </div>
-            
+            </div>
+
 
             <div class="admin">
 
-                <img src="srikanth.png" alt="profile pic">
+                <img src="{{ profile.admin_avatar }}" alt="profile pic" id="topbarAvatar">
 
-                <span>Admin</span>
+                <span id="topbarAdminName">{{ profile.admin_name }}</span>
 
             </div>
 
@@ -171,51 +176,45 @@
         </div>
 
         <!-- Student Form -->
-    <div>
+        <div>
 
-        <div class="student-form">
+            <div class="student-form">
 
-            <h2>Add / Edit Student</h2>
+                <h2>Add / Edit Student</h2>
 
-            <div class="form-grid">
+                <div class="form-grid">
 
-                <input type="hidden" id="editIndex">
+                    <input type="hidden" id="editIndex">
 
-                <input type="text"
-                    id="name"
-                    placeholder="Student Name">
+                    <input type="text" id="name" placeholder="Student Name">
 
-                <input type="email"
-                    id="email"
-                    placeholder="Email Address">
+                    <input type="email" id="email" placeholder="Email Address">
 
-                <input type="text"
-                    id="course"
-                    placeholder="Course">
+                    <input type="text" id="course" placeholder="Course">
 
-                <select id="status">
+                    <select id="status">
 
-                    <option value="Active">
-                        Active
-                    </option>
+                        <option value="Active">
+                            Active
+                        </option>
 
-                    <option value="Inactive">
-                        Inactive
-                    </option>
+                        <option value="Inactive">
+                            Inactive
+                        </option>
 
-                </select>
+                    </select>
 
-                
+
+                </div>
+                <button id="addBtn" onclick="addStudent()">Add Student</button>
+
             </div>
-            <button id="addBtn"onclick="addStudent()">Add Student</button>
 
-        </div>
 
-        
 
-    <!-- JavaScript -->
+            <!-- JavaScript -->
 
-    <script src="script.js"></script>
+            <script src="../static/script.js"></script>
 
 </body>
 

@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="{{ profile.theme }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teachers Directory - Student Management Dashboard</title>
+    <title>Courses Directory - Student Management Dashboard</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="teachers.css">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/courses.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-border: {{ profile.accent_color }} !important;
+            --sidebar-active-bg: {{ profile.accent_color }}1a !important;
+            --primary-color: {{ profile.accent_color }} !important;
+            --primary-hover: {{ profile.accent_hover }} !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -36,13 +44,13 @@
                     Students
                 </a>
             </li>
-            <li>
+            <li class="active">
                 <a href="courses.html">
                     <i class="fa-solid fa-book"></i>
                     Courses
                 </a>
             </li>
-            <li class="active">
+            <li>
                 <a href="teachers.html">
                     <i class="fa-solid fa-users"></i>
                     Teachers
@@ -83,76 +91,76 @@
         <!-- Topbar -->
         <div class="topbar">
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search teacher">
+                <input type="text" id="searchInput" placeholder="Search course">
                 <button>Search</button>
             </div>
             <div class="admin">
-                <img src="srikanth.png" alt="profile pic">
-                <span>Admin</span>
+                <img src="{{ profile.admin_avatar }}" alt="profile pic" id="topbarAvatar">
+                <span id="topbarAdminName">{{ profile.admin_name }}</span>
             </div>
         </div>
 
-        <!-- Teacher Cards -->
+        <!-- Course Cards -->
         <div class="cards">
             <div class="card">
                 <div>
-                    <h2 id="totalTeachers">5</h2>
-                    <p>Total Staff</p>
+                    <h2 id="totalCourses">5</h2>
+                    <p>Total Courses</p>
                 </div>
-                <i class="fa-solid fa-users"></i>
+                <i class="fa-solid fa-book"></i>
             </div>
             <div class="card">
                 <div>
-                    <h2 id="activeTeachers">5</h2>
-                    <p>Active Staff</p>
+                    <h2 id="activeCourses">5</h2>
+                    <p>Active Courses</p>
                 </div>
-                <i class="fa-solid fa-user-check"></i>
+                <i class="fa-solid fa-circle-check"></i>
             </div>
             <div class="card">
                 <div>
-                    <h2 id="onLeaveTeachers">0</h2>
-                    <p>On Leave</p>
+                    <h2 id="totalCategories">3</h2>
+                    <p>Categories</p>
                 </div>
-                <i class="fa-solid fa-user-slash"></i>
+                <i class="fa-solid fa-layer-group"></i>
             </div>
         </div>
 
-        <!-- Teacher Form -->
+        <!-- Course Form -->
         <div class="student-form">
-            <h2>Add / Edit Teacher</h2>
+            <h2>Add / Edit Course</h2>
             <div class="form-grid">
                 <input type="hidden" id="editIndex">
-                <input type="text" id="teacherName" placeholder="Teacher Name">
-                <input type="email" id="teacherEmail" placeholder="Email Address">
-                <input type="text" id="teacherSpec" placeholder="Specialization (e.g. Java)">
-                <input type="text" id="teacherExp" placeholder="Experience (e.g. 5 Years)">
-                <select id="teacherStatus">
+                <input type="text" id="courseTitle" placeholder="Course Title">
+                <input type="text" id="courseTeacher" placeholder="Instructor Name">
+                <input type="text" id="courseCategory" placeholder="Category (e.g. Development)">
+                <input type="text" id="courseDuration" placeholder="Duration (e.g. 3 Months)">
+                <select id="courseStatus">
                     <option value="Active">Active</option>
-                    <option value="On Leave">On Leave</option>
+                    <option value="Inactive">Inactive</option>
                 </select>
             </div>
-            <button id="addBtn" onclick="addTeacher()">Add Teacher</button>
+            <button id="addBtn" onclick="addCourse()">Add Course</button>
         </div>
 
-        <!-- Teachers Table -->
+        <!-- Courses Table -->
         <div class="table-section">
             <div class="table-header">
-                <h2>Teacher Details</h2>
+                <h2>Course Details</h2>
             </div>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Specialization</th>
-                            <th>Experience</th>
+                            <th>Title</th>
+                            <th>Instructor</th>
+                            <th>Category</th>
+                            <th>Duration</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="teacherTable">
+                    <tbody id="courseTable">
                         <!-- Rendered by JS -->
                     </tbody>
                 </table>
@@ -161,7 +169,7 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="teachers.js"></script>
+    <script src="../static/courses.js"></script>
 </body>
 
 </html>
