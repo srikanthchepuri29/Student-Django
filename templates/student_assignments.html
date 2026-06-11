@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Assignments</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="/student_portal.css">
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h2>STUDENT PORTAL</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="/student/dashboard.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/profile.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>My Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/lms.html">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>LMS Materials</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/mcq.html">
+                    <i class="fa-solid fa-square-check"></i>
+                    <span>MCQ Arena</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/coding.html">
+                    <i class="fa-solid fa-code"></i>
+                    <span>Coding Practice</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/schedule.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Class Schedule</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="/student/assignments.html">
+                    <i class="fa-solid fa-file-signature"></i>
+                    <span>Assignments</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/logout.html" style="color: var(--danger); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="topbar-title">
+                <h1>Assignments & Tasks</h1>
+            </div>
+            <div class="user-profile-section">
+                <div class="user-details">
+                    <span class="user-name" id="topbarName">Student Name</span>
+                    <span class="user-role" id="topbarRole">Student Enrolled</span>
+                </div>
+                <img src="/srikanth.png" alt="Profile" class="user-avatar" id="topbarAvatar">
+            </div>
+        </div>
+
+        <!-- Content Body -->
+        <div class="content-body">
+            <div class="coding-layout">
+                <!-- Left Column: Assignments List & Info -->
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <div class="section-card" style="margin-bottom: 0;">
+                        <div class="section-header">
+                            <h3>Course Assignments</h3>
+                        </div>
+                        <div class="mcq-categories-list" id="assignmentsList">
+                            <p style="color: var(--text-secondary); text-align: center;">Loading assignments...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Submission Form -->
+                <div class="editor-arena" style="height: auto;">
+                    <div class="editor-header">
+                        <h3 id="assignmentTitle">Select Assignment</h3>
+                        <span id="assignmentStatusPill" class="status-pill pending">Pending</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <strong>Due Date:</strong>
+                        <span id="assignmentDueDate" style="color: var(--danger); margin-left: 8px; font-weight: 600; font-size: 13.5px;">-</span>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <strong>Task Description:</strong>
+                        <p id="assignmentDesc" style="color: var(--text-secondary); line-height: 1.5; margin-top: 8px; font-size: 14.5px;">Select an assignment from the left to view details.</p>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label for="assignmentContentInput"><strong>Your Submission Details / Code Solutions:</strong></label>
+                        <textarea id="assignmentContentInput" rows="10" placeholder="Type solution details, repository link, or notes here..." style="font-family: monospace; font-size: 13.5px;"></textarea>
+                    </div>
+
+                    <div class="editor-actions">
+                        <span>Make sure you upload correct content before submission.</span>
+                        <button class="submit-btn" onclick="submitStudentAssignment()">
+                            <i class="fa-solid fa-cloud-arrow-up" style="margin-right: 6px;"></i>Submit Assignment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/student_portal.js"></script>
+</body>
+</html>

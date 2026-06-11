@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="{{ profile.theme }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Practice Arena Management - Student Management Dashboard</title>
+
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/student.css">
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-border: {{ profile.accent_color }} !important;
+            --sidebar-active-bg: {{ profile.accent_color }}1a !important;
+            --primary-color: {{ profile.accent_color }} !important;
+            --primary-hover: {{ profile.accent_hover }} !important;
+        }
+        
+        .textarea-full {
+            grid-column: span 2;
+        }
+        @media (max-width: 768px) {
+            .textarea-full {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>ADMIN PORTAL</h2>
+        </div>
+
+        <ul class="menu">
+            <li>
+                <a href="index.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="has-submenu open">
+                <a href="#" class="submenu-toggle">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Student Portal</span>
+                    <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+                </a>
+                <ul class="submenu" style="display: flex; flex-direction: column;">
+                    <li class="lms-sub"><a href="manage_lms.html"><i class="fa-solid fa-book-open"></i><span>LMS Materials</span></a></li>
+                    <li class="mcq-sub"><a href="manage_mcq.html"><i class="fa-solid fa-list-check"></i><span>MCQ Arena</span></a></li>
+                    <li class="coding-sub active"><a href="manage_coding.html"><i class="fa-solid fa-code"></i><span>Coding Practice</span></a></li>
+                    <li class="schedule-sub"><a href="manage_schedule.html"><i class="fa-solid fa-calendar-days"></i><span>Class Schedule</span></a></li>
+                    <li class="assignments-sub"><a href="manage_assignments.html"><i class="fa-solid fa-file-signature"></i><span>Assignments</span></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="student.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    Students
+                </a>
+            </li>
+            <li>
+                <a href="courses.html">
+                    <i class="fa-solid fa-book"></i>
+                    Courses
+                </a>
+            </li>
+            <li>
+                <a href="teachers.html">
+                    <i class="fa-solid fa-users"></i>
+                    Teachers
+                </a>
+            </li>
+            <li>
+                <a href="settings.html">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+            </li>
+
+            <div class="S">
+                <a href="login.html">Login</a>
+                <a href="logout.html">Logout</a>
+            </div>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search coding challenges">
+                <button>Search</button>
+            </div>
+            <div class="admin">
+                <img src="{{ profile.admin_avatar }}" alt="profile pic" id="topbarAvatar">
+                <span id="topbarAdminName">{{ profile.admin_name }}</span>
+            </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="cards">
+            <div class="card">
+                <div>
+                    <h2 id="totalChallenges">0</h2>
+                    <p>Total Challenges</p>
+                </div>
+                <i class="fa-solid fa-code"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h2 id="easyCount">0</h2>
+                    <p>Easy Level</p>
+                </div>
+                <i class="fa-solid fa-child-reaching" style="color: var(--success);"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h2 id="mediumCount">0</h2>
+                    <p>Medium Level</p>
+                </div>
+                <i class="fa-solid fa-user-gear" style="color: var(--warning);"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h2 id="hardCount">0</h2>
+                    <p>Hard Level</p>
+                </div>
+                <i class="fa-solid fa-brain" style="color: var(--danger);"></i>
+            </div>
+        </div>
+
+        <!-- Add / Edit Form -->
+        <div class="student-form">
+            <h2 id="formHeader">Add Coding Challenge</h2>
+            <div class="form-grid">
+                <input type="hidden" id="editIndex">
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Challenge Title</label>
+                    <input type="text" id="challengeTitle" placeholder="e.g. Find Duplicates">
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Difficulty Rating</label>
+                    <select id="challengeDifficulty">
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Category Tag</label>
+                    <select id="challengeCategory">
+                        <option value="Python">Python</option>
+                        <option value="Java">Java</option>
+                        <option value="HTML">HTML</option>
+                        <option value="CSS">CSS</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="Django">Django</option>
+                        <option value="SQL">SQL</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Topic (Focus Area)</label>
+                    <input type="text" id="challengeTopic" placeholder="e.g. Arrays, Strings, Recursion">
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Target Technology</label>
+                    <input type="text" id="challengeTechnology" placeholder="e.g. Python 3, ES6 JavaScript">
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Show Solution to Students</label>
+                    <select id="showSolution">
+                        <option value="true">Yes (Expose Sample Solution)</option>
+                        <option value="false">No (Keep Solution Hidden)</option>
+                    </select>
+                </div>
+
+                <div class="textarea-full">
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Problem Description (Markdown supported)</label>
+                    <textarea id="challengeDescription" rows="4" placeholder="Describe the programming problem in detail..." style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-primary); font-family: inherit; font-size: 13.5px; box-sizing: border-box;"></textarea>
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Input Constraints Format</label>
+                    <textarea id="challengeInputFormat" rows="2" placeholder="e.g. A list of integers separated by space" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-primary); font-family: inherit; font-size: 13.5px; box-sizing: border-box;"></textarea>
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Output Expectations Format</label>
+                    <textarea id="challengeOutputFormat" rows="2" placeholder="e.g. The maximum sum value as integer" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-primary); font-family: inherit; font-size: 13.5px; box-sizing: border-box;"></textarea>
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Sample Test Input Case</label>
+                    <textarea id="challengeSampleInput" rows="2" placeholder="e.g. [1, 2, 3, 2, 4]" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-primary); font-family: inherit; font-size: 13.5px; box-sizing: border-box;"></textarea>
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Sample Test Output Case</label>
+                    <textarea id="challengeSampleOutput" rows="2" placeholder="e.g. 2" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-primary); font-family: inherit; font-size: 13.5px; box-sizing: border-box;"></textarea>
+                </div>
+
+                <div class="textarea-full">
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Reference Solution Code (Students will see if enabled)</label>
+                    <textarea id="challengeSolution" rows="5" placeholder="def find_duplicates(arr):&#10;    # Write reference implementation..." style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-primary); font-family: 'Courier New', Courier, monospace; font-size: 13.5px; box-sizing: border-box;"></textarea>
+                </div>
+            </div>
+            <button id="addBtn" onclick="saveChallenge()" style="margin-top: 15px;">Add Challenge</button>
+            <button id="cancelBtn" onclick="resetForm()" style="margin-top: 15px; margin-left: 10px; background-color: var(--text-secondary); display: none;">Cancel</button>
+        </div>
+
+        <!-- Challenges Table -->
+        <div class="table-section">
+            <div class="table-header">
+                <h2>Coding Challenges directory</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Topic</th>
+                            <th>Technology</th>
+                            <th>Difficulty</th>
+                            <th>Solution Exposed</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="challengesTable">
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: var(--text-secondary);">Loading practice challenges...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script imports -->
+    <script src="../static/sidebar.js"></script>
+    <script>
+        // Custom Coding Challenge Actions
+        async function fetchChallenges() {
+            try {
+                const res = await fetch('/api/admin/coding/');
+                const data = await res.json();
+                return data.challenges || [];
+            } catch(e) {
+                console.error(e);
+                return [];
+            }
+        }
+
+        async function renderChallenges() {
+            const tableBody = document.getElementById('challengesTable');
+            if(!tableBody) return;
+
+            const challenges = await fetchChallenges();
+            tableBody.innerHTML = '';
+
+            let easyCount = 0;
+            let mediumCount = 0;
+            let hardCount = 0;
+
+            if (challenges.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-secondary);">No coding challenges found. Add one above.</td></tr>';
+            }
+
+            challenges.forEach(c => {
+                const diff = c.difficulty.toLowerCase();
+                if(diff === 'easy') easyCount++;
+                if(diff === 'medium') mediumCount++;
+                if(diff === 'hard') hardCount++;
+
+                const row = document.createElement('tr');
+                const diffClass = diff === 'easy' ? 'success' : (diff === 'medium' ? 'warning' : 'danger');
+
+                row.innerHTML = `
+                    <td><strong>${c.title}</strong></td>
+                    <td>${c.category}</td>
+                    <td>${c.topic || 'N/A'}</td>
+                    <td>${c.technology || 'N/A'}</td>
+                    <td><span class="status ${diffClass}" style="padding: 2px 6px; font-size: 11px;">${c.difficulty}</span></td>
+                    <td><span style="font-weight:600; color: ${c.show_solution_to_students ? 'var(--success)' : 'var(--danger)'}">${c.show_solution_to_students ? 'Yes' : 'No'}</span></td>
+                    <td>
+                        <button class="edit-btn" onclick="editChallenge(${c.id})">Edit</button>
+                        <button class="delete-btn" onclick="deleteChallenge(${c.id})">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            document.getElementById('totalChallenges').textContent = challenges.length;
+            document.getElementById('easyCount').textContent = easyCount;
+            document.getElementById('mediumCount').textContent = mediumCount;
+            document.getElementById('hardCount').textContent = hardCount;
+        }
+
+        async function saveChallenge() {
+            const editId = document.getElementById('editIndex').value;
+            const payload = {
+                title: document.getElementById('challengeTitle').value.trim(),
+                difficulty: document.getElementById('challengeDifficulty').value,
+                category: document.getElementById('challengeCategory').value,
+                topic: document.getElementById('challengeTopic').value.trim(),
+                technology: document.getElementById('challengeTechnology').value.trim(),
+                show_solution_to_students: document.getElementById('showSolution').value === 'true',
+                description: document.getElementById('challengeDescription').value.trim(),
+                input_format: document.getElementById('challengeInputFormat').value.trim(),
+                output_format: document.getElementById('challengeOutputFormat').value.trim(),
+                sample_input: document.getElementById('challengeSampleInput').value.trim(),
+                sample_output: document.getElementById('challengeSampleOutput').value.trim(),
+                sample_solution: document.getElementById('challengeSolution').value.trim()
+            };
+
+            if(!payload.title || !payload.description) {
+                alert('Please fill out Title and Description fields.');
+                return;
+            }
+
+            let url = '/api/admin/coding/';
+            let method = 'POST';
+
+            if(editId !== '') {
+                url = `/api/admin/coding/${editId}/`;
+                method = 'PUT';
+            }
+
+            try {
+                const res = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if(res.ok) {
+                    alert(editId ? 'Challenge updated successfully!' : 'Challenge added successfully!');
+                    resetForm();
+                    await renderChallenges();
+                } else {
+                    const err = await res.json();
+                    alert(err.error || 'Failed to save challenge.');
+                }
+            } catch(e) {
+                console.error(e);
+                alert('An error occurred while saving.');
+            }
+        }
+
+        async function editChallenge(id) {
+            try {
+                const res = await fetch(`/api/admin/coding/${id}/`);
+                if(!res.ok) {
+                    alert('Could not retrieve details.');
+                    return;
+                }
+                const c = await res.json();
+
+                document.getElementById('challengeTitle').value = c.title;
+                document.getElementById('challengeDifficulty').value = c.difficulty;
+                document.getElementById('challengeCategory').value = c.category;
+                document.getElementById('challengeTopic').value = c.topic;
+                document.getElementById('challengeTechnology').value = c.technology;
+                document.getElementById('showSolution').value = c.show_solution_to_students ? 'true' : 'false';
+                document.getElementById('challengeDescription').value = c.description;
+                document.getElementById('challengeInputFormat').value = c.input_format;
+                document.getElementById('challengeOutputFormat').value = c.output_format;
+                document.getElementById('challengeSampleInput').value = c.sample_input;
+                document.getElementById('challengeSampleOutput').value = c.sample_output;
+                document.getElementById('challengeSolution').value = c.sample_solution;
+
+                document.getElementById('editIndex').value = c.id;
+                document.getElementById('formHeader').textContent = 'Edit Coding Challenge';
+                document.getElementById('addBtn').textContent = 'Update Challenge';
+                document.getElementById('cancelBtn').style.display = 'inline-block';
+
+                document.querySelector('.student-form').scrollIntoView({ behavior: 'smooth' });
+            } catch(e) {
+                console.error(e);
+            }
+        }
+
+        async function deleteChallenge(id) {
+            if(!confirm('Are you sure you want to delete this challenge?')) return;
+
+            try {
+                const res = await fetch(`/api/admin/coding/${id}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                });
+
+                if(res.ok) {
+                    await renderChallenges();
+                } else {
+                    alert('Failed to delete challenge.');
+                }
+            } catch(e) {
+                console.error(e);
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('challengeTitle').value = '';
+            document.getElementById('challengeTopic').value = '';
+            document.getElementById('challengeTechnology').value = '';
+            document.getElementById('challengeDescription').value = '';
+            document.getElementById('challengeInputFormat').value = '';
+            document.getElementById('challengeOutputFormat').value = '';
+            document.getElementById('challengeSampleInput').value = '';
+            document.getElementById('challengeSampleOutput').value = '';
+            document.getElementById('challengeSolution').value = '';
+            document.getElementById('editIndex').value = '';
+
+            document.getElementById('formHeader').textContent = 'Add Coding Challenge';
+            document.getElementById('addBtn').textContent = 'Add Challenge';
+            document.getElementById('cancelBtn').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await renderChallenges();
+
+            // Local Search
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keyup', function () {
+                    const filter = this.value.toLowerCase();
+                    const rows = document.querySelectorAll('#challengesTable tr');
+
+                    rows.forEach(row => {
+                        const text = row.innerText.toLowerCase();
+                        row.style.display = text.includes(filter) ? '' : 'none';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

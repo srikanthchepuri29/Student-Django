@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="{{ profile.theme }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Arena Management - Student Management Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/student.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-border: {{ profile.accent_color }} !important;
+            --sidebar-active-bg: {{ profile.accent_color }}1a !important;
+            --primary-color: {{ profile.accent_color }} !important;
+            --primary-hover: {{ profile.accent_hover }} !important;
+        }
+        
+        .textarea-full {
+            grid-column: span 2;
+        }
+        @media (max-width: 768px) {
+            .textarea-full {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>ADMIN PORTAL</h2>
+        </div>
+
+        <ul class="menu">
+            <li>
+                <a href="index.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="has-submenu open">
+                <a href="#" class="submenu-toggle">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Student Portal</span>
+                    <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+                </a>
+                <ul class="submenu" style="display: flex; flex-direction: column;">
+                    <li class="lms-sub"><a href="manage_lms.html"><i class="fa-solid fa-book-open"></i><span>LMS Materials</span></a></li>
+                    <li class="mcq-sub active"><a href="manage_mcq.html"><i class="fa-solid fa-list-check"></i><span>MCQ Arena</span></a></li>
+                    <li class="coding-sub"><a href="manage_coding.html"><i class="fa-solid fa-code"></i><span>Coding Practice</span></a></li>
+                    <li class="schedule-sub"><a href="manage_schedule.html"><i class="fa-solid fa-calendar-days"></i><span>Class Schedule</span></a></li>
+                    <li class="assignments-sub"><a href="manage_assignments.html"><i class="fa-solid fa-file-signature"></i><span>Assignments</span></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="student.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    Students
+                </a>
+            </li>
+            <li>
+                <a href="courses.html">
+                    <i class="fa-solid fa-book"></i>
+                    Courses
+                </a>
+            </li>
+            <li>
+                <a href="teachers.html">
+                    <i class="fa-solid fa-users"></i>
+                    Teachers
+                </a>
+            </li>
+            <li>
+                <a href="settings.html">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+            </li>
+
+            <div class="S">
+                <a href="login.html">Login</a>
+                <a href="logout.html">Logout</a>
+            </div>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search MCQs">
+                <button>Search</button>
+            </div>
+            <div class="admin">
+                <img src="{{ profile.admin_avatar }}" alt="profile pic" id="topbarAvatar">
+                <span id="topbarAdminName">{{ profile.admin_name }}</span>
+            </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="cards">
+            <div class="card">
+                <div>
+                    <h2 id="totalMCQs">0</h2>
+                    <p>Total MCQs</p>
+                </div>
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h2 id="activeMCQs">0</h2>
+                    <p>Active Questions</p>
+                </div>
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h2 id="categoriesCount">0</h2>
+                    <p>Categories Available</p>
+                </div>
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+        </div>
+
+        <!-- Add / Edit Form -->
+        <div class="student-form">
+            <h2 id="formHeader">Add MCQ</h2>
+            <div class="form-grid">
+                <input type="hidden" id="editIndex">
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Category</label>
+                    <select id="mcqCategory">
+                        <option value="Python">Python</option>
+                        <option value="HTML">HTML</option>
+                        <option value="CSS">CSS</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="Django">Django</option>
+                        <option value="SQL">SQL</option>
+                        <option value="Aptitude">Aptitude</option>
+                        <option value="English">English</option>
+                        <option value="Logical Reasoning">Logical Reasoning</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Difficulty Level</label>
+                    <select id="mcqDifficulty">
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
+
+                <div class="textarea-full">
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Question Statement</label>
+                    <textarea id="questionText" rows="3" placeholder="Write the question statement here..." style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-primary); font-family: inherit; font-size: 13.5px; box-sizing: border-box;"></textarea>
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Option A</label>
+                    <input type="text" id="optionA" placeholder="Answer choice A">
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Option B</label>
+                    <input type="text" id="optionB" placeholder="Answer choice B">
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Option C</label>
+                    <input type="text" id="optionC" placeholder="Answer choice C">
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Option D</label>
+                    <input type="text" id="optionD" placeholder="Answer choice D">
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Correct Answer Choice</label>
+                    <select id="correctOption">
+                        <option value="A">Option A</option>
+                        <option value="B">Option B</option>
+                        <option value="C">Option C</option>
+                        <option value="D">Option D</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Publish Status</label>
+                    <select id="isActive">
+                        <option value="true">Active (Students Can See)</option>
+                        <option value="false">Inactive (Draft/Hidden)</option>
+                    </select>
+                </div>
+
+                <div class="textarea-full">
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Solution Explanation</label>
+                    <textarea id="explanation" rows="3" placeholder="Provide explanation details explaining why correct choice is correct..." style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-primary); font-family: inherit; font-size: 13.5px; box-sizing: border-box;"></textarea>
+                </div>
+            </div>
+            <button id="addBtn" onclick="saveMCQ()" style="margin-top: 15px;">Add Question</button>
+            <button id="cancelBtn" onclick="resetForm()" style="margin-top: 15px; margin-left: 10px; background-color: var(--text-secondary); display: none;">Cancel</button>
+        </div>
+
+        <!-- MCQs Table -->
+        <div class="table-section">
+            <div class="table-header">
+                <h2>MCQ Questions List</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Question Text</th>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                            <th>D</th>
+                            <th>Correct</th>
+                            <th>Difficulty</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mcqTable">
+                        <tr>
+                            <td colspan="10" style="text-align: center; color: var(--text-secondary);">Loading MCQs...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script imports -->
+    <script src="../static/sidebar.js"></script>
+    <script>
+        // Custom MCQ Arena Actions
+        async function fetchMCQs() {
+            try {
+                const res = await fetch('/api/admin/mcq/');
+                const data = await res.json();
+                return data.mcqs || [];
+            } catch(e) {
+                console.error(e);
+                return [];
+            }
+        }
+
+        async function renderMCQs() {
+            const tableBody = document.getElementById('mcqTable');
+            if(!tableBody) return;
+
+            const mcqs = await fetchMCQs();
+            tableBody.innerHTML = '';
+
+            let activeCount = 0;
+            const categories = new Set();
+
+            if (mcqs.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--text-secondary);">No questions found. Add one above.</td></tr>';
+            }
+
+            mcqs.forEach(q => {
+                if(q.is_active) activeCount++;
+                if(q.category) categories.add(q.category);
+
+                const row = document.createElement('tr');
+                const statusText = q.is_active ? 'Active' : 'Inactive';
+                const statusClass = q.is_active ? 'active' : 'inactive';
+                const diffClass = q.difficulty.toLowerCase() === 'easy' ? 'success' : (q.difficulty.toLowerCase() === 'medium' ? 'warning' : 'danger');
+
+                // Truncate question statement
+                const truncatedQuestion = q.question_text.length > 55 ? q.question_text.substring(0, 52) + '...' : q.question_text;
+
+                row.innerHTML = `
+                    <td><strong>${q.category}</strong></td>
+                    <td title="${q.question_text}">${truncatedQuestion}</td>
+                    <td style="font-size: 12.5px; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${q.option_a}</td>
+                    <td style="font-size: 12.5px; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${q.option_b}</td>
+                    <td style="font-size: 12.5px; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${q.option_c}</td>
+                    <td style="font-size: 12.5px; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${q.option_d}</td>
+                    <td style="text-align: center;"><span style="font-weight: 700; color: var(--primary-color);">${q.correct_option}</span></td>
+                    <td><span class="status ${q.difficulty.toLowerCase()}" style="padding: 2px 6px; font-size: 11px;">${q.difficulty}</span></td>
+                    <td><span class="status ${statusClass}">${statusText}</span></td>
+                    <td>
+                        <button class="edit-btn" onclick="editMCQ(${q.id})">Edit</button>
+                        <button class="delete-btn" onclick="deleteMCQ(${q.id})">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            document.getElementById('totalMCQs').textContent = mcqs.length;
+            document.getElementById('activeMCQs').textContent = activeCount;
+            document.getElementById('categoriesCount').textContent = categories.size;
+        }
+
+        async function saveMCQ() {
+            const editId = document.getElementById('editIndex').value;
+            const payload = {
+                category: document.getElementById('mcqCategory').value,
+                difficulty: document.getElementById('mcqDifficulty').value,
+                question_text: document.getElementById('questionText').value.trim(),
+                option_a: document.getElementById('optionA').value.trim(),
+                option_b: document.getElementById('optionB').value.trim(),
+                option_c: document.getElementById('optionC').value.trim(),
+                option_d: document.getElementById('optionD').value.trim(),
+                correct_option: document.getElementById('correctOption').value,
+                is_active: document.getElementById('isActive').value === 'true',
+                explanation: document.getElementById('explanation').value.trim()
+            };
+
+            if(!payload.question_text || !payload.option_a || !payload.option_b || !payload.option_c || !payload.option_d) {
+                alert('Please fill out question text and all four answer options.');
+                return;
+            }
+
+            let url = '/api/admin/mcq/';
+            let method = 'POST';
+
+            if(editId !== '') {
+                url = `/api/admin/mcq/${editId}/`;
+                method = 'PUT';
+            }
+
+            try {
+                const res = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if(res.ok) {
+                    alert(editId ? 'Question updated successfully!' : 'Question added successfully!');
+                    resetForm();
+                    await renderMCQs();
+                } else {
+                    const err = await res.json();
+                    alert(err.error || 'Failed to save question.');
+                }
+            } catch(e) {
+                console.error(e);
+                alert('An error occurred while saving.');
+            }
+        }
+
+        async function editMCQ(id) {
+            try {
+                const res = await fetch(`/api/admin/mcq/${id}/`);
+                if(!res.ok) {
+                    alert('Could not retrieve details.');
+                    return;
+                }
+                const q = await res.json();
+
+                document.getElementById('mcqCategory').value = q.category;
+                document.getElementById('mcqDifficulty').value = q.difficulty;
+                document.getElementById('questionText').value = q.question_text;
+                document.getElementById('optionA').value = q.option_a;
+                document.getElementById('optionB').value = q.option_b;
+                document.getElementById('optionC').value = q.option_c;
+                document.getElementById('optionD').value = q.option_d;
+                document.getElementById('correctOption').value = q.correct_option;
+                document.getElementById('isActive').value = q.is_active ? 'true' : 'false';
+                document.getElementById('explanation').value = q.explanation;
+
+                document.getElementById('editIndex').value = q.id;
+                document.getElementById('formHeader').textContent = 'Edit MCQ Question';
+                document.getElementById('addBtn').textContent = 'Update Question';
+                document.getElementById('cancelBtn').style.display = 'inline-block';
+
+                document.querySelector('.student-form').scrollIntoView({ behavior: 'smooth' });
+            } catch(e) {
+                console.error(e);
+            }
+        }
+
+        async function deleteMCQ(id) {
+            if(!confirm('Are you sure you want to delete this question?')) return;
+
+            try {
+                const res = await fetch(`/api/admin/mcq/${id}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                });
+
+                if(res.ok) {
+                    await renderMCQs();
+                } else {
+                    alert('Failed to delete question.');
+                }
+            } catch(e) {
+                console.error(e);
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('questionText').value = '';
+            document.getElementById('optionA').value = '';
+            document.getElementById('optionB').value = '';
+            document.getElementById('optionC').value = '';
+            document.getElementById('optionD').value = '';
+            document.getElementById('explanation').value = '';
+            document.getElementById('editIndex').value = '';
+
+            document.getElementById('formHeader').textContent = 'Add MCQ';
+            document.getElementById('addBtn').textContent = 'Add Question';
+            document.getElementById('cancelBtn').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await renderMCQs();
+
+            // Local Search
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keyup', function () {
+                    const filter = this.value.toLowerCase();
+                    const rows = document.querySelectorAll('#mcqTable tr');
+
+                    rows.forEach(row => {
+                        const text = row.innerText.toLowerCase();
+                        row.style.display = text.includes(filter) ? '' : 'none';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

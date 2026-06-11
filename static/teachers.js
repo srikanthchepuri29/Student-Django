@@ -221,17 +221,107 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     await renderTeachers();
 
-    // Setup teacher search
+    // Setup teacher search with Suggestions and Button Click
     const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('keyup', function () {
-            const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll('#teacherTable tr');
+    const searchBox = document.querySelector('.search-box');
+    
+    if (searchInput && searchBox) {
+        // Dynamically create suggestions container
+        const suggestionsContainer = document.createElement('div');
+        suggestionsContainer.className = 'search-suggestions';
+        suggestionsContainer.id = 'searchSuggestions';
+        searchBox.appendChild(suggestionsContainer);
 
+        // Function to perform search
+        const performSearch = () => {
+            const filter = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll('#teacherTable tr');
             rows.forEach(row => {
-                const text = row.innerText.toLowerCase();
-                row.style.display = text.includes(filter) ? '' : 'none';
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 1) {
+                    const name = cells[1].textContent.toLowerCase();
+                    const spec = cells[3].textContent.toLowerCase();
+                    row.style.display = (name.includes(filter) || spec.includes(filter)) ? '' : 'none';
+                } else {
+                    const text = row.innerText.toLowerCase();
+                    row.style.display = text.includes(filter) ? '' : 'none';
+                }
             });
+            suggestionsContainer.style.display = 'none';
+        };
+
+        // Input listener for filtering suggestions
+        searchInput.addEventListener('input', function () {
+            const filter = this.value.trim().toLowerCase();
+            if (filter.length === 0) {
+                suggestionsContainer.style.display = 'none';
+                // Reset search filter
+                const rows = document.querySelectorAll('#teacherTable tr');
+                rows.forEach(row => row.style.display = '');
+                return;
+            }
+
+            // Get teacher names from teacherTable rows
+            const rows = document.querySelectorAll('#teacherTable tr');
+            const teacherList = [];
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 1) {
+                    const name = cells[1].textContent.trim();
+                    teacherList.push({ name });
+                }
+            });
+
+            // Filter teachers
+            const matches = teacherList.filter(t => t.name.toLowerCase().includes(filter));
+
+            if (matches.length > 0) {
+                suggestionsContainer.innerHTML = '';
+                // Deduplicate matches
+                const uniqueMatches = [];
+                const seen = new Set();
+                matches.forEach(m => {
+                    if (!seen.has(m.name.toLowerCase())) {
+                        seen.add(m.name.toLowerCase());
+                        uniqueMatches.push(m);
+                    }
+                });
+
+                uniqueMatches.slice(0, 5).forEach(match => {
+                    const item = document.createElement('div');
+                    item.className = 'suggestion-item';
+                    item.innerHTML = `<i class="fa-solid fa-users"></i> <span>${match.name}</span>`;
+                    item.addEventListener('click', function () {
+                        searchInput.value = match.name;
+                        performSearch();
+                    });
+                    suggestionsContainer.appendChild(item);
+                });
+                suggestionsContainer.style.display = 'block';
+            } else {
+                suggestionsContainer.style.display = 'none';
+            }
+        });
+
+        // Click search button
+        const searchBtn = searchBox.querySelector('button');
+        if (searchBtn) {
+            searchBtn.addEventListener('click', performSearch);
+        }
+
+        // Enter key in input
+        searchInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performSearch();
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!searchBox.contains(e.target)) {
+                suggestionsContainer.style.display = 'none';
+            }
         });
     }
 });

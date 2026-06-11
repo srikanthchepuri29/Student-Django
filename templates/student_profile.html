@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Student Profile</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="/student_portal.css">
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h2>STUDENT PORTAL</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="/student/dashboard.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="/student/profile.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>My Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/lms.html">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>LMS Materials</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/mcq.html">
+                    <i class="fa-solid fa-square-check"></i>
+                    <span>MCQ Arena</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/coding.html">
+                    <i class="fa-solid fa-code"></i>
+                    <span>Coding Practice</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/schedule.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Class Schedule</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/assignments.html">
+                    <i class="fa-solid fa-file-signature"></i>
+                    <span>Assignments</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/logout.html" style="color: var(--danger); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="topbar-title">
+                <h1>My Profile Details</h1>
+            </div>
+            <div class="user-profile-section">
+                <div class="user-details">
+                    <span class="user-name" id="topbarName">Student Name</span>
+                    <span class="user-role" id="topbarRole">Student Enrolled</span>
+                </div>
+                <img src="/srikanth.png" alt="Profile" class="user-avatar" id="topbarAvatar">
+            </div>
+        </div>
+
+        <!-- Content Body -->
+        <div class="content-body">
+            <div class="profile-grid">
+                <!-- Left Column: Photo Upload -->
+                <div class="avatar-upload-card">
+                    <img src="/srikanth.png" alt="Student Profile Avatar" id="profileAvatarImg">
+                    <h3 style="margin-bottom: 8px;">Upload Photo</h3>
+                    <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 20px;">JPEG or PNG formats supported</p>
+                    <label class="upload-btn">
+                        <i class="fa-solid fa-camera" style="margin-right: 8px;"></i>Choose Image
+                        <input type="file" style="display: none;" accept="image/*" onchange="handleAvatarUpload(this)">
+                    </label>
+                </div>
+
+                <!-- Right Column: Details Edit Form -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h3>Personal Profile Form</h3>
+                    </div>
+                    <form id="studentProfileForm" onsubmit="saveStudentProfile(event)">
+                        <div class="form-columns">
+                            <div class="form-group">
+                                <label for="full_name">Full Name (Read Only)</label>
+                                <input type="text" id="full_name" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="student_id">Student ID (Read Only)</label>
+                                <input type="text" id="student_id" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email address (Read Only)</label>
+                                <input type="email" id="email" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="course_name">Course enrolled (Read Only)</label>
+                                <input type="text" id="course_name" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="batch_name">Current Batch (Read Only)</label>
+                                <input type="text" id="batch_name" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="joining_date">Joining Date (Read Only)</label>
+                                <input type="text" id="joining_date" readonly>
+                            </div>
+                            
+                            <!-- Editable Fields -->
+                            <div class="form-group">
+                                <label for="mobile_number">Mobile Number</label>
+                                <input type="text" id="mobile_number" placeholder="Enter mobile number" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="date_of_birth">Date of Birth</label>
+                                <input type="text" id="date_of_birth" placeholder="YYYY-MM-DD" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select id="gender">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="emergency_contact">Emergency Contact No</label>
+                                <input type="text" id="emergency_contact" placeholder="Emergency contact number" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="educational_qualification">Educational Qualification</label>
+                                <input type="text" id="educational_qualification" placeholder="Degree / Graduation" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="previous_study_details">Previous Study details</label>
+                                <input type="text" id="previous_study_details" placeholder="E.g., Computer Science background" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="college_university_name">College / University</label>
+                                <input type="text" id="college_university_name" placeholder="E.g., JNTU" required>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="address">Residential Address</label>
+                                <textarea id="address" rows="3" placeholder="Enter residential address" required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn" style="margin-top: 15px;">
+                            <i class="fa-solid fa-floppy-disk" style="margin-right: 8px;"></i>Save Profile
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/student_portal.js"></script>
+</body>
+</html>

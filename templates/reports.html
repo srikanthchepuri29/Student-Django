@@ -18,6 +18,7 @@
             margin-top: 10px;
             overflow: hidden;
         }
+
         .progress-bar-fill {
             height: 100%;
             border-radius: 5px;
@@ -86,6 +87,27 @@
                     Settings
                 </a>
             </li>
+
+            <li class="has-submenu">
+                <a href="#" class="submenu-toggle">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Student Portal</span>
+                    <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+                </a>
+                <ul class="submenu">
+                    <li class="lms-sub"><a href="manage_lms.html"><i class="fa-solid fa-book-open"></i><span>LMS
+                                Materials</span></a></li>
+                    <li class="mcq-sub"><a href="manage_mcq.html"><i class="fa-solid fa-list-check"></i><span>MCQ
+                                Arena</span></a></li>
+                    <li class="coding-sub"><a href="manage_coding.html"><i class="fa-solid fa-code"></i><span>Coding
+                                Practice</span></a></li>
+                    <li class="schedule-sub"><a href="manage_schedule.html"><i
+                                class="fa-solid fa-calendar-days"></i><span>Class Schedule</span></a></li>
+                    <li class="assignments-sub"><a href="manage_assignments.html"><i
+                                class="fa-solid fa-file-signature"></i><span>Assignments</span></a></li>
+                </ul>
+            </li>
+
             <div class="S">
                 <a href="login.html">
                     Login
@@ -99,7 +121,7 @@
 
     <!-- Main Content -->
     <div class="main-content">
-        
+
         <!-- Topbar -->
         <div class="topbar">
             <div>
@@ -155,7 +177,8 @@
                         <span>28 Students enrolled</span>
                     </div>
                     <div class="progress-bar-container">
-                        <div class="progress-bar-fill" style="width: 60%; background: var(--primary-color); opacity: 0.85;"></div>
+                        <div class="progress-bar-fill"
+                            style="width: 60%; background: var(--primary-color); opacity: 0.85;"></div>
                     </div>
                 </div>
                 <div>
@@ -164,36 +187,38 @@
                         <span>19 Students enrolled</span>
                     </div>
                     <div class="progress-bar-container">
-                        <div class="progress-bar-fill" style="width: 45%; background: var(--primary-color); opacity: 0.7;"></div>
+                        <div class="progress-bar-fill"
+                            style="width: 45%; background: var(--primary-color); opacity: 0.7;"></div>
                     </div>
                 </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600;">
+                        <span>Flutter</span>
+                        <span>12 Students enrolled</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill"
+                            style="width: 45%; background: var(--primary-color); opacity: 0.7;"></div>
+                    </div>
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600;">
+                        <span>MIS</span>
+                        <span>09 Students enrolled</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill"
+                            style="width: 45%; background: var(--primary-color); opacity: 0.7;"></div>
+                    </div>
+                </div>
+
             </div>
+
+
         </div>
     </div>
 
-    <script>
-        // Apply Global Theme preferences
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            const savedColor = localStorage.getItem('accentColor') || '#3b82f6';
-            const savedHover = localStorage.getItem('accentHover') || '#2563eb';
-
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            document.documentElement.style.setProperty('--sidebar-border', savedColor);
-            document.documentElement.style.setProperty('--sidebar-active-bg', savedColor);
-            document.documentElement.style.setProperty('--primary-color', savedColor);
-            document.documentElement.style.setProperty('--primary-hover', savedHover);
-
-            // Sync Admin Display Profile
-            const adminName = localStorage.getItem('adminName') || 'Admin';
-            const adminAvatar = localStorage.getItem('adminAvatar') || 'srikanth.png';
-            
-            const nameEl = document.querySelector('.admin span');
-            const avatarEl = document.querySelector('.admin img');
-            if (nameEl) nameEl.textContent = adminName;
-            if (avatarEl) avatarEl.src = adminAvatar;
-        });
-    </script>
+    <script src="../static/sidebar.js"></script>
 </body>
 
 </html>

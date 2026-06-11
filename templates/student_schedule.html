@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Timetable Schedule</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="/student_portal.css">
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h2>STUDENT PORTAL</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="/student/dashboard.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/profile.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>My Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/lms.html">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>LMS Materials</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/mcq.html">
+                    <i class="fa-solid fa-square-check"></i>
+                    <span>MCQ Arena</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/coding.html">
+                    <i class="fa-solid fa-code"></i>
+                    <span>Coding Practice</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="/student/schedule.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Class Schedule</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/assignments.html">
+                    <i class="fa-solid fa-file-signature"></i>
+                    <span>Assignments</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/logout.html" style="color: var(--danger); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="topbar-title">
+                <h1>Class Timetable</h1>
+            </div>
+            <div class="user-profile-section">
+                <div class="user-details">
+                    <span class="user-name" id="topbarName">Student Name</span>
+                    <span class="user-role" id="topbarRole">Student Enrolled</span>
+                </div>
+                <img src="/srikanth.png" alt="Profile" class="user-avatar" id="topbarAvatar">
+            </div>
+        </div>
+
+        <!-- Content Body -->
+        <div class="content-body">
+            <!-- Weekly Schedule Timetable Grid -->
+            <div class="schedule-table-card">
+                <div class="section-header">
+                    <h3>Weekly Academic Schedule</h3>
+                    <span style="font-size: 13.5px; color: var(--text-secondary);">Working Hours: 9:30 AM to 4:30 PM (Mon-Fri)</span>
+                </div>
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 200px;">Time Slot</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scheduleTableBody">
+                        <!-- Javascript will generate this dynamically -->
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--text-secondary); padding: 30px;">Loading schedule data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Notes Section -->
+            <div class="section-card" style="margin-top: 30px; border-left: 4px solid var(--accent-color);">
+                <h4>Schedule Constraints & Parameters</h4>
+                <ul style="margin-left: 20px; margin-top: 10px; font-size: 13.5px; color: var(--text-secondary); line-height: 1.6;">
+                    <li>Working Hours: <strong>9:30 AM to 4:30 PM</strong>.</li>
+                    <li>Technical Classes are **2 hours** in duration.</li>
+                    <li>Self-Preparation/Practice slots are **1 hour** allocated directly following classes.</li>
+                    <li>A fixed **Lunch Break** is scheduled daily from <strong>1:00 PM to 2:00 PM</strong>.</li>
+                    <li>A **15-minute Short Break** is scheduled from 12:30 PM to 12:45 PM.</li>
+                    <li>Weekly schedules vary automatically each week with randomized subjects.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/student_portal.js"></script>
+</body>
+</html>

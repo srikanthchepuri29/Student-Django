@@ -218,17 +218,108 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     await renderCourses();
 
-    // Setup course search
+    // Setup course search with Suggestions and Button Click
     const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('keyup', function () {
-            const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll('#courseTable tr');
+    const searchBox = document.querySelector('.search-box');
+    
+    if (searchInput && searchBox) {
+        // Dynamically create suggestions container
+        const suggestionsContainer = document.createElement('div');
+        suggestionsContainer.className = 'search-suggestions';
+        suggestionsContainer.id = 'searchSuggestions';
+        searchBox.appendChild(suggestionsContainer);
 
+        // Function to perform search
+        const performSearch = () => {
+            const filter = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll('#courseTable tr');
             rows.forEach(row => {
-                const text = row.innerText.toLowerCase();
-                row.style.display = text.includes(filter) ? '' : 'none';
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 1) {
+                    const title = cells[1].textContent.toLowerCase();
+                    const category = cells[3].textContent.toLowerCase();
+                    const teacher = cells[2].textContent.toLowerCase();
+                    row.style.display = (title.includes(filter) || category.includes(filter) || teacher.includes(filter)) ? '' : 'none';
+                } else {
+                    const text = row.innerText.toLowerCase();
+                    row.style.display = text.includes(filter) ? '' : 'none';
+                }
             });
+            suggestionsContainer.style.display = 'none';
+        };
+
+        // Input listener for filtering suggestions
+        searchInput.addEventListener('input', function () {
+            const filter = this.value.trim().toLowerCase();
+            if (filter.length === 0) {
+                suggestionsContainer.style.display = 'none';
+                // Reset search filter
+                const rows = document.querySelectorAll('#courseTable tr');
+                rows.forEach(row => row.style.display = '');
+                return;
+            }
+
+            // Get course titles from courseTable rows
+            const rows = document.querySelectorAll('#courseTable tr');
+            const courseList = [];
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 1) {
+                    const title = cells[1].textContent.trim();
+                    courseList.push({ title });
+                }
+            });
+
+            // Filter courses
+            const matches = courseList.filter(c => c.title.toLowerCase().includes(filter));
+
+            if (matches.length > 0) {
+                suggestionsContainer.innerHTML = '';
+                // Deduplicate matches
+                const uniqueMatches = [];
+                const seen = new Set();
+                matches.forEach(m => {
+                    if (!seen.has(m.title.toLowerCase())) {
+                        seen.add(m.title.toLowerCase());
+                        uniqueMatches.push(m);
+                    }
+                });
+
+                uniqueMatches.slice(0, 5).forEach(match => {
+                    const item = document.createElement('div');
+                    item.className = 'suggestion-item';
+                    item.innerHTML = `<i class="fa-solid fa-book"></i> <span>${match.title}</span>`;
+                    item.addEventListener('click', function () {
+                        searchInput.value = match.title;
+                        performSearch();
+                    });
+                    suggestionsContainer.appendChild(item);
+                });
+                suggestionsContainer.style.display = 'block';
+            } else {
+                suggestionsContainer.style.display = 'none';
+            }
+        });
+
+        // Click search button
+        const searchBtn = searchBox.querySelector('button');
+        if (searchBtn) {
+            searchBtn.addEventListener('click', performSearch);
+        }
+
+        // Enter key in input
+        searchInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performSearch();
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!searchBox.contains(e.target)) {
+                suggestionsContainer.style.display = 'none';
+            }
         });
     }
 });

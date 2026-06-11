@@ -19,6 +19,16 @@
     <div class="container">
 
         <form class="form-box">
+            <h2 id="loginTitle">Admin Portal Login</h2>
+
+            <div class="login-tabs" style="display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px;">
+                <button type="button" id="adminTab" class="tab-btn" onclick="switchTab('admin')" style="flex: 1; padding: 10px; background: #3b82f6; color: white; border-radius: 8px; border: none; font-size: 13.5px; font-weight: 600; cursor: pointer; box-shadow: none; transition: all 0.2s ease;">
+                    <i class="fa-solid fa-user-shield" style="margin-right: 6px;"></i>Admin Portal
+                </button>
+                <button type="button" id="studentTab" class="tab-btn" onclick="switchTab('student')" style="flex: 1; padding: 10px; background: #f1f5f9; color: #475569; border-radius: 8px; border: none; font-size: 13.5px; font-weight: 600; cursor: pointer; box-shadow: none; transition: all 0.2s ease;">
+                    <i class="fa-solid fa-user-graduate" style="margin-right: 6px;"></i>Student Portal
+                </button>
+            </div>
 
             <div class="input-box">
 
@@ -42,7 +52,7 @@
                 Login
             </button>
 
-            <p>
+            <p id="regText">
                 Don't have an account?
                 <a href="register.html">
                     Register
@@ -54,6 +64,32 @@
     </div>
 
     <script>
+        let currentRole = 'admin';
+
+        function switchTab(role) {
+            currentRole = role;
+            const adminTab = document.getElementById('adminTab');
+            const studentTab = document.getElementById('studentTab');
+            const loginTitle = document.getElementById('loginTitle');
+            const regLink = document.querySelector('#regText a');
+            
+            if (role === 'admin') {
+                adminTab.style.background = '#3b82f6';
+                adminTab.style.color = '#ffffff';
+                studentTab.style.background = '#f1f5f9';
+                studentTab.style.color = '#475569';
+                loginTitle.textContent = 'Admin Portal Login';
+                if (regLink) regLink.href = 'register.html';
+            } else {
+                studentTab.style.background = '#3b82f6';
+                studentTab.style.color = '#ffffff';
+                adminTab.style.background = '#f1f5f9';
+                adminTab.style.color = '#475569';
+                loginTitle.textContent = 'Student Portal Login';
+                if (regLink) regLink.href = 'student_register.html';
+            }
+        }
+
         function getCookie(name) {
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -70,6 +106,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Set initial tab styles correctly
+            switchTab('admin');
+
             const form = document.querySelector('.form-box');
             if (form) {
                 form.addEventListener('submit', async (e) => {
@@ -89,14 +128,14 @@
                                 'Content-Type': 'application/json',
                                 'X-CSRFToken': getCookie('csrftoken')
                             },
-                            body: JSON.stringify({ email, password })
+                            body: JSON.stringify({ email, password, role: currentRole })
                         });
 
+                        const data = await response.json();
                         if (response.ok) {
-                            window.location.href = '/index.html';
+                            window.location.href = data.redirect || '/index.html';
                         } else {
-                            const err = await response.json();
-                            alert(err.error || 'Invalid credentials');
+                            alert(data.error || 'Invalid credentials');
                         }
                     } catch (err) {
                         console.error(err);
@@ -106,6 +145,7 @@
             }
         });
     </script>
+
 
 </body>
 

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Test Arena</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="/student_portal.css">
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h2>STUDENT PORTAL</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="/student/dashboard.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/profile.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>My Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/lms.html">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>LMS Materials</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="/student/mcq.html">
+                    <i class="fa-solid fa-square-check"></i>
+                    <span>MCQ Arena</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/coding.html">
+                    <i class="fa-solid fa-code"></i>
+                    <span>Coding Practice</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/schedule.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Class Schedule</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/assignments.html">
+                    <i class="fa-solid fa-file-signature"></i>
+                    <span>Assignments</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/logout.html" style="color: var(--danger); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="topbar-title">
+                <h1>MCQ Evaluation Arena</h1>
+            </div>
+            <div class="user-profile-section">
+                <div class="user-details">
+                    <span class="user-name" id="topbarName">Student Name</span>
+                    <span class="user-role" id="topbarRole">Student Enrolled</span>
+                </div>
+                <img src="/srikanth.png" alt="Profile" class="user-avatar" id="topbarAvatar">
+            </div>
+        </div>
+
+        <!-- Content Body -->
+        <div class="content-body">
+            <div class="mcq-layout">
+                <!-- Left Column: MCQ Categories -->
+                <div>
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h3>Choose Category</h3>
+                        </div>
+                        <div class="mcq-categories-list" id="mcqCategories">
+                            <p style="color: var(--text-secondary); text-align: center;">Loading categories...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Attempt History -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h3>Attempt History</h3>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table class="schedule-table" style="min-width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Score</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mcqHistoryBody">
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; color: var(--text-secondary);">Loading history...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Quiz Arena -->
+                <div class="quiz-arena" id="quizArena">
+                    <h3>Select a category from the left list to begin the evaluation.</h3>
+                    <p style="color: var(--text-secondary); margin-top: 10px;">Each quiz contains multiple choice questions. Scores are instantly recorded on completion.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/student_portal.js"></script>
+</body>
+</html>

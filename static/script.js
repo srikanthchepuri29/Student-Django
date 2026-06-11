@@ -1,16 +1,4 @@
-// Theme and Accent Loader (handled by pre-rendering but fallback or updates)
-function initTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    const savedColor = localStorage.getItem('accentColor') || '#2563eb';
-    const savedHover = localStorage.getItem('accentHover') || '#1d4ed8';
-
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    document.documentElement.style.setProperty('--sidebar-border', savedColor);
-    document.documentElement.style.setProperty('--sidebar-active-bg', savedColor + '1a');
-    document.documentElement.style.setProperty('--primary-color', savedColor);
-    document.documentElement.style.setProperty('--primary-hover', savedHover);
-}
-document.addEventListener('DOMContentLoaded', initTheme);
+// Theme loading is handled by sidebar.js. script.js only handles student CRUD dashboard widgets.
 
 // Helper for Django CSRF
 function getCookie(name) {
@@ -225,17 +213,108 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error(e);
     }
 
-    // Setup Search Event Listener
+    // Setup Search Event Listener with Suggestions and Button Click
     const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('keyup', function () {
-            const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll('#studentTable tr');
+    const searchBox = document.querySelector('.search-box');
+    
+    if (searchInput && searchBox) {
+        // Dynamically create suggestions container
+        const suggestionsContainer = document.createElement('div');
+        suggestionsContainer.className = 'search-suggestions';
+        suggestionsContainer.id = 'searchSuggestions';
+        searchBox.appendChild(suggestionsContainer);
 
+        // Function to perform search
+        const performSearch = () => {
+            const filter = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll('#studentTable tr');
             rows.forEach(row => {
-                const text = row.innerText.toLowerCase();
-                row.style.display = text.includes(filter) ? '' : 'none';
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 1) {
+                    const name = cells[1].textContent.toLowerCase();
+                    const id = cells[0].textContent.toLowerCase();
+                    row.style.display = (name.includes(filter) || id.includes(filter)) ? '' : 'none';
+                } else {
+                    const text = row.innerText.toLowerCase();
+                    row.style.display = text.includes(filter) ? '' : 'none';
+                }
             });
+            suggestionsContainer.style.display = 'none';
+        };
+
+        // Input listener for filtering suggestions
+        searchInput.addEventListener('input', function () {
+            const filter = this.value.trim().toLowerCase();
+            if (filter.length === 0) {
+                suggestionsContainer.style.display = 'none';
+                // Reset search filter
+                const rows = document.querySelectorAll('#studentTable tr');
+                rows.forEach(row => row.style.display = '');
+                return;
+            }
+
+            // Get names from studentTable rows
+            const rows = document.querySelectorAll('#studentTable tr');
+            const studentList = [];
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 1) {
+                    const name = cells[1].textContent.trim();
+                    const email = cells[2].textContent.trim();
+                    studentList.push({ name, email });
+                }
+            });
+
+            // Filter students
+            const matches = studentList.filter(s => s.name.toLowerCase().includes(filter));
+
+            if (matches.length > 0) {
+                suggestionsContainer.innerHTML = '';
+                // Deduplicate matches
+                const uniqueMatches = [];
+                const seen = new Set();
+                matches.forEach(m => {
+                    if (!seen.has(m.name.toLowerCase())) {
+                        seen.add(m.name.toLowerCase());
+                        uniqueMatches.push(m);
+                    }
+                });
+
+                uniqueMatches.slice(0, 5).forEach(match => {
+                    const item = document.createElement('div');
+                    item.className = 'suggestion-item';
+                    item.innerHTML = `<i class="fa-solid fa-user-graduate"></i> <span>${match.name}</span>`;
+                    item.addEventListener('click', function () {
+                        searchInput.value = match.name;
+                        performSearch();
+                    });
+                    suggestionsContainer.appendChild(item);
+                });
+                suggestionsContainer.style.display = 'block';
+            } else {
+                suggestionsContainer.style.display = 'none';
+            }
+        });
+
+        // Click search button
+        const searchBtn = searchBox.querySelector('button');
+        if (searchBtn) {
+            searchBtn.addEventListener('click', performSearch);
+        }
+
+        // Enter key in input
+        searchInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performSearch();
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!searchBox.contains(e.target)) {
+                suggestionsContainer.style.display = 'none';
+            }
         });
     }
 });

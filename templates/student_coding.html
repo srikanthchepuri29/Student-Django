@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Practice Arena</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="/student_portal.css">
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h2>STUDENT PORTAL</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="/student/dashboard.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/profile.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>My Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/lms.html">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>LMS Materials</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/mcq.html">
+                    <i class="fa-solid fa-square-check"></i>
+                    <span>MCQ Arena</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="/student/coding.html">
+                    <i class="fa-solid fa-code"></i>
+                    <span>Coding Practice</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/schedule.html">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Class Schedule</span>
+                </a>
+            </li>
+            <li>
+                <a href="/student/assignments.html">
+                    <i class="fa-solid fa-file-signature"></i>
+                    <span>Assignments</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/logout.html" style="color: var(--danger); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="topbar-title">
+                <h1>Coding Practice Arena</h1>
+            </div>
+            <div class="user-profile-section">
+                <div class="user-details">
+                    <span class="user-name" id="topbarName">Student Name</span>
+                    <span class="user-role" id="topbarRole">Student Enrolled</span>
+                </div>
+                <img src="/srikanth.png" alt="Profile" class="user-avatar" id="topbarAvatar">
+            </div>
+        </div>
+
+        <!-- Content Body -->
+        <div class="content-body">
+            <!-- Difficulty Filters -->
+            <div class="filter-tabs">
+                <div class="filter-tab active" data-diff="all" onclick="filterCodingChallenges('all')">All Difficulties</div>
+                <div class="filter-tab" data-diff="easy" onclick="filterCodingChallenges('easy')">Easy Level</div>
+                <div class="filter-tab" data-diff="medium" onclick="filterCodingChallenges('medium')">Medium Level</div>
+                <div class="filter-tab" data-diff="hard" onclick="filterCodingChallenges('hard')">Hard Level</div>
+            </div>
+
+            <div class="coding-layout">
+                <!-- Left Column: Challenges List & Details -->
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Challenges list -->
+                    <div class="section-card" style="margin-bottom: 0;">
+                        <div class="section-header">
+                            <h3>Coding Exercises</h3>
+                        </div>
+                        <div class="mcq-categories-list" id="challengeList" style="max-height: 200px; overflow-y: auto;">
+                            <p style="color: var(--text-secondary); text-align: center;">Loading challenges...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Challenge Description Details -->
+                    <div class="challenge-details" style="flex-grow: 1; height: 350px;">
+                        <h3 id="challengeTitle">Reverse a String</h3>
+                        <p class="challenge-desc" id="challengeDesc">Select an exercise above to display its description.</p>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <strong>Input Format:</strong>
+                            <p id="challengeInputFormat" style="font-size: 13.5px; color: var(--text-secondary); margin-top: 4px;">N/A</p>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <strong>Output Format:</strong>
+                            <p id="challengeOutputFormat" style="font-size: 13.5px; color: var(--text-secondary); margin-top: 4px;">N/A</p>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <strong>Sample Input:</strong>
+                                <pre class="code-block" id="challengeSampleInput" style="margin-top: 4px; padding: 8px;">N/A</pre>
+                            </div>
+                            <div>
+                                <strong>Sample Output:</strong>
+                                <pre class="code-block" id="challengeSampleOutput" style="margin-top: 4px; padding: 8px;">N/A</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Code Editor Workspace -->
+                <div class="editor-arena">
+                    <div class="editor-header">
+                        <h4>Python Interpreter Editor</h4>
+                        <button type="button" id="showSolutionBtn" class="upload-btn" style="padding: 4px 8px; font-size: 12px; display: none;" onclick="toggleChallengeSolution()">
+                            <i class="fa-solid fa-lightbulb" style="color: var(--warning); margin-right: 4px;"></i>Toggle Solution
+                        </button>
+                    </div>
+                    
+                    <!-- Solution Display (Hidden initially) -->
+                    <div id="solutionCard" class="section-card" style="margin-bottom: 12px; padding: 12px; border-color: var(--warning); display: none;">
+                        <strong style="color: var(--warning); font-size: 12.5px; display: block; margin-bottom: 6px;">Reference Solution:</strong>
+                        <pre id="solutionCode" style="font-family: monospace; font-size: 12.5px; color: #fff; background: var(--bg-tertiary); padding: 8px; border-radius: 6px; white-space: pre-wrap; overflow-x: auto; max-height: 120px;"></pre>
+                    </div>
+
+                    <textarea class="editor-textarea" id="codingEditor" spellcheck="false"># Write python code here...</textarea>
+                    
+                    <div class="editor-actions">
+                        <span style="font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px;">
+                            <i class="fa-solid fa-circle-info" style="color: var(--accent-color);"></i>
+                            Runs program code with sample cases
+                        </span>
+                        <button class="submit-btn" onclick="submitCodingChallenge()">
+                            <i class="fa-solid fa-play" style="margin-right: 6px;"></i>Submit Solution
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/student_portal.js"></script>
+</body>
+</html>

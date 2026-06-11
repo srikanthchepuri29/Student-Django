@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <link rel="stylesheet" href="../static/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <form class="form-box">
+
+            <h2>Student Registration</h2>
+
+            <div class="input-box">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="studentName" placeholder="Enter Name" required>
+            </div>
+
+            <div class="input-box">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="studentEmail" placeholder="Enter Email" required>
+            </div>
+
+            <div class="input-box">
+                <i class="fa-solid fa-book"></i>
+                <select id="studentCourse" required style="width: 100%; padding: 14px 14px 14px 46px; border: 1px solid #cbd5e1; border-radius: 10px; outline: none; font-size: 14px; font-weight: 500; color: #0f172a; background: #f8fafc; transition: all 0.25s ease; -webkit-appearance: none; -moz-appearance: none; appearance: none;">
+                    <option value="" disabled selected>Select Course</option>
+                    <option value="Python Full Stack">Python Full Stack</option>
+                    <option value="Java Development">Java Development</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="React JS">React JS</option>
+                    <option value="Flutter Mobile App">Flutter Mobile App</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="studentPassword" placeholder="Create Password" required>
+            </div>
+
+            <button type="submit">
+                Register Student Account
+            </button>
+
+            <p>
+                Already have an account?
+                <a href="login.html">
+                    Login
+                </a>
+            </p>
+
+        </form>
+
+    </div>
+
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('.form-box');
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const name = document.getElementById('studentName').value.trim();
+                    const email = document.getElementById('studentEmail').value.trim();
+                    const course = document.getElementById('studentCourse').value;
+                    const password = document.getElementById('studentPassword').value;
+
+                    if (!name || !email || !course || !password) {
+                        alert('Please fill out all fields');
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch('/api/student/register/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCookie('csrftoken')
+                            },
+                            body: JSON.stringify({ name, email, course, password })
+                        });
+
+                        const data = await response.json();
+                        if (response.ok) {
+                            alert('Student account registered successfully!');
+                            window.location.href = data.redirect || '/student/dashboard.html';
+                        } else {
+                            alert(data.error || 'Failed to register');
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        alert('An error occurred during registration');
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

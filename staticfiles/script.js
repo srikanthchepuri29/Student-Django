@@ -1,16 +1,4 @@
-// Theme and Accent Loader (handled by pre-rendering but fallback or updates)
-function initTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    const savedColor = localStorage.getItem('accentColor') || '#2563eb';
-    const savedHover = localStorage.getItem('accentHover') || '#1d4ed8';
-
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    document.documentElement.style.setProperty('--sidebar-border', savedColor);
-    document.documentElement.style.setProperty('--sidebar-active-bg', savedColor + '1a');
-    document.documentElement.style.setProperty('--primary-color', savedColor);
-    document.documentElement.style.setProperty('--primary-hover', savedHover);
-}
-document.addEventListener('DOMContentLoaded', initTheme);
+// Theme loading is handled by sidebar.js. script.js only handles student CRUD dashboard widgets.
 
 // Helper for Django CSRF
 function getCookie(name) {

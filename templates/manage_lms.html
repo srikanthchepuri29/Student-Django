@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="{{ profile.theme }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Materials Management - Student Management Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/student.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-border: {{ profile.accent_color }} !important;
+            --sidebar-active-bg: {{ profile.accent_color }}1a !important;
+            --primary-color: {{ profile.accent_color }} !important;
+            --primary-hover: {{ profile.accent_hover }} !important;
+        }
+        
+        .textarea-full {
+            grid-column: span 2;
+        }
+        @media (max-width: 768px) {
+            .textarea-full {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>ADMIN PORTAL</h2>
+        </div>
+
+        <ul class="menu">
+            <li>
+                <a href="index.html">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li class="has-submenu open">
+                <a href="#" class="submenu-toggle">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Student Portal</span>
+                    <i class="fa-solid fa-chevron-down submenu-arrow"></i>
+                </a>
+                <ul class="submenu" style="display: flex; flex-direction: column;">
+                    <li class="lms-sub active"><a href="manage_lms.html"><i class="fa-solid fa-book-open"></i><span>LMS Materials</span></a></li>
+                    <li class="mcq-sub"><a href="manage_mcq.html"><i class="fa-solid fa-list-check"></i><span>MCQ Arena</span></a></li>
+                    <li class="coding-sub"><a href="manage_coding.html"><i class="fa-solid fa-code"></i><span>Coding Practice</span></a></li>
+                    <li class="schedule-sub"><a href="manage_schedule.html"><i class="fa-solid fa-calendar-days"></i><span>Class Schedule</span></a></li>
+                    <li class="assignments-sub"><a href="manage_assignments.html"><i class="fa-solid fa-file-signature"></i><span>Assignments</span></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="student.html">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    Students
+                </a>
+            </li>
+            <li>
+                <a href="courses.html">
+                    <i class="fa-solid fa-book"></i>
+                    Courses
+                </a>
+            </li>
+            <li>
+                <a href="teachers.html">
+                    <i class="fa-solid fa-users"></i>
+                    Teachers
+                </a>
+            </li>
+            <li>
+                <a href="settings.html">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </a>
+            </li>
+
+            <div class="S">
+                <a href="login.html">Login</a>
+                <a href="logout.html">Logout</a>
+            </div>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search learning material">
+                <button>Search</button>
+            </div>
+            <div class="admin">
+                <img src="{{ profile.admin_avatar }}" alt="profile pic" id="topbarAvatar">
+                <span id="topbarAdminName">{{ profile.admin_name }}</span>
+            </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="cards">
+            <div class="card">
+                <div>
+                    <h2 id="totalMaterials">0</h2>
+                    <p>Total Materials</p>
+                </div>
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h2 id="pdfCount">0</h2>
+                    <p>PDF Notes</p>
+                </div>
+                <i class="fa-solid fa-file-pdf"></i>
+            </div>
+            <div class="card">
+                <div>
+                    <h2 id="videoCount">0</h2>
+                    <p>Video Materials</p>
+                </div>
+                <i class="fa-solid fa-circle-play"></i>
+            </div>
+        </div>
+
+        <!-- Add / Edit Form -->
+        <div class="student-form">
+            <h2 id="formHeader">Add LMS Material</h2>
+            <div class="form-grid">
+                <input type="hidden" id="editIndex">
+                
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Title</label>
+                    <input type="text" id="materialTitle" placeholder="Material Title">
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Material Category</label>
+                    <select id="materialType">
+                        <option value="technical_notes">Technical Notes</option>
+                        <option value="aptitude">Aptitude Preparation</option>
+                        <option value="english">English Communication</option>
+                        <option value="interview_q">Technical Interview Questions</option>
+                        <option value="mini_projects">Mini Projects</option>
+                        <option value="mock_interview">Mock Interview Prep</option>
+                        <option value="daily_tasks">Daily Practice Tasks</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">File Type</label>
+                    <select id="fileType">
+                        <option value="PDF">PDF</option>
+                        <option value="Video">Video</option>
+                        <option value="Document">Document</option>
+                        <option value="Link">Link</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">File / URL Link</label>
+                    <input type="text" id="fileUrl" placeholder="e.g. filename.pdf or https://youtube.com/...">
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Course Name</label>
+                    <select id="courseName">
+                        {% for course in courses %}
+                        <option value="{{ course.title }}">{{ course.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Target Batch</label>
+                    <select id="batchId">
+                        <option value="">Global (All Batches)</option>
+                        {% for batch in batches %}
+                        <option value="{{ batch.id }}">{{ batch.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Technology</label>
+                    <input type="text" id="technology" placeholder="e.g. Django, Flutter, Python">
+                </div>
+
+                <div class="textarea-full">
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Description / Context</label>
+                    <textarea id="description" rows="3" placeholder="Provide background details or summaries of the material content..." style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-primary); font-family: inherit; font-size: 13.5px; box-sizing: border-box;"></textarea>
+                </div>
+
+                <div class="textarea-full">
+                    <label style="font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 5px;">Full Text Content (Optional)</label>
+                    <textarea id="textContent" rows="5" placeholder="Raw content text, cheat sheets, or interview questions..." style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-primary); font-family: inherit; font-size: 13.5px; box-sizing: border-box;"></textarea>
+                </div>
+            </div>
+            <button id="addBtn" onclick="saveMaterial()" style="margin-top: 15px;">Add Material</button>
+            <button id="cancelBtn" onclick="resetForm()" style="margin-top: 15px; margin-left: 10px; background-color: var(--text-secondary); display: none;">Cancel</button>
+        </div>
+
+        <!-- Materials Table -->
+        <div class="table-section">
+            <div class="table-header">
+                <h2>Learning Materials</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Type</th>
+                            <th>Course</th>
+                            <th>Batch</th>
+                            <th>Technology</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="materialsTable">
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: var(--text-secondary);">Loading lms materials...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script imports -->
+    <script src="../static/sidebar.js"></script>
+    <script>
+        // Custom LMS JS Actions
+        async function fetchMaterials() {
+            try {
+                const res = await fetch('/api/admin/lms/');
+                const data = await res.json();
+                return data.materials || [];
+            } catch(e) {
+                console.error(e);
+                return [];
+            }
+        }
+
+        async function renderMaterials() {
+            const tableBody = document.getElementById('materialsTable');
+            if(!tableBody) return;
+
+            const materials = await fetchMaterials();
+            tableBody.innerHTML = '';
+
+            let pdfCount = 0;
+            let videoCount = 0;
+
+            if (materials.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-secondary);">No learning materials found. Add one above.</td></tr>';
+            }
+
+            materials.forEach(m => {
+                if(m.file_type.toLowerCase() === 'pdf') pdfCount++;
+                if(m.file_type.toLowerCase() === 'video') videoCount++;
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${m.title}</strong></td>
+                    <td><span class="status active" style="background-color: var(--sidebar-active-bg); color: var(--primary-color);">${m.material_type_display}</span></td>
+                    <td>${m.file_type}</td>
+                    <td>${m.course_name}</td>
+                    <td>${m.batch_name}</td>
+                    <td>${m.technology || 'N/A'}</td>
+                    <td style="font-size: 12px; color: var(--text-secondary);">${m.uploaded_at}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editMaterial(${m.id})">Edit</button>
+                        <button class="delete-btn" onclick="deleteMaterial(${m.id})">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            document.getElementById('totalMaterials').textContent = materials.length;
+            document.getElementById('pdfCount').textContent = pdfCount;
+            document.getElementById('videoCount').textContent = videoCount;
+        }
+
+        async function saveMaterial() {
+            const editId = document.getElementById('editIndex').value;
+            const payload = {
+                title: document.getElementById('materialTitle').value.trim(),
+                material_type: document.getElementById('materialType').value,
+                file_type: document.getElementById('fileType').value,
+                file_url: document.getElementById('fileUrl').value.trim(),
+                content: document.getElementById('textContent').value.trim(),
+                course_name: document.getElementById('courseName').value,
+                batch_id: document.getElementById('batchId').value,
+                technology: document.getElementById('technology').value.trim(),
+                description: document.getElementById('description').value.trim()
+            };
+
+            if(!payload.title || !payload.course_name) {
+                alert('Please fill out Title and Course Name fields.');
+                return;
+            }
+
+            let url = '/api/admin/lms/';
+            let method = 'POST';
+
+            if(editId !== '') {
+                url = `/api/admin/lms/${editId}/`;
+                method = 'PUT';
+            }
+
+            try {
+                const res = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if(res.ok) {
+                    alert(editId ? 'LMS Material updated successfully!' : 'LMS Material added successfully!');
+                    resetForm();
+                    await renderMaterials();
+                } else {
+                    const err = await res.json();
+                    alert(err.error || 'Failed to save material.');
+                }
+            } catch(e) {
+                console.error(e);
+                alert('An error occurred while saving.');
+            }
+        }
+
+        async function editMaterial(id) {
+            try {
+                const res = await fetch(`/api/admin/lms/${id}/`);
+                if(!res.ok) {
+                    alert('Could not retrieve details.');
+                    return;
+                }
+                const m = await res.json();
+
+                document.getElementById('materialTitle').value = m.title;
+                document.getElementById('materialType').value = m.material_type;
+                document.getElementById('fileType').value = m.file_type;
+                document.getElementById('fileUrl').value = m.file_url;
+                document.getElementById('textContent').value = m.content;
+                document.getElementById('courseName').value = m.course_name;
+                document.getElementById('batchId').value = m.batch_id || '';
+                document.getElementById('technology').value = m.technology;
+                document.getElementById('description').value = m.description;
+                
+                document.getElementById('editIndex').value = m.id;
+                document.getElementById('formHeader').textContent = 'Edit LMS Material';
+                document.getElementById('addBtn').textContent = 'Update Material';
+                document.getElementById('cancelBtn').style.display = 'inline-block';
+
+                document.querySelector('.student-form').scrollIntoView({ behavior: 'smooth' });
+            } catch(e) {
+                console.error(e);
+            }
+        }
+
+        async function deleteMaterial(id) {
+            if(!confirm('Are you sure you want to delete this learning material?')) return;
+
+            try {
+                const res = await fetch(`/api/admin/lms/${id}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                });
+
+                if(res.ok) {
+                    await renderMaterials();
+                } else {
+                    alert('Failed to delete material.');
+                }
+            } catch(e) {
+                console.error(e);
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('materialTitle').value = '';
+            document.getElementById('fileUrl').value = '';
+            document.getElementById('textContent').value = '';
+            document.getElementById('technology').value = '';
+            document.getElementById('description').value = '';
+            document.getElementById('editIndex').value = '';
+            
+            document.getElementById('formHeader').textContent = 'Add LMS Material';
+            document.getElementById('addBtn').textContent = 'Add Material';
+            document.getElementById('cancelBtn').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await renderMaterials();
+
+            // Local Search
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keyup', function () {
+                    const filter = this.value.toLowerCase();
+                    const rows = document.querySelectorAll('#materialsTable tr');
+
+                    rows.forEach(row => {
+                        const text = row.innerText.toLowerCase();
+                        row.style.display = text.includes(filter) ? '' : 'none';
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
